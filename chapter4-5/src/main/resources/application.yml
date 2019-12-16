@@ -2,7 +2,7 @@ server:
   port: 8045
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver #MySQL驱动类
     url: jdbc:mysql://localhost:3306/SpringCloud?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&serverTimezone=GMT
     username: root
     password: 123456
