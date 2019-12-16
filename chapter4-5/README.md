@@ -48,7 +48,8 @@ public class User {
   //省略了getter setter方法
 }
 ```
-### 创建DAO层
+### 四、创建DAO层
+数据库库访问层DAO，编写一个UserDao接口，继承JpaRepository接口，
 
 
 
