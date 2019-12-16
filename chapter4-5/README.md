@@ -1,7 +1,34 @@
-## Chapter 4-2 Examples
+## Chapter 4-5 Spring Boot整合JPA
 ====================================================================
+JPA全称JAVA Persistence API，它是一个数据持久化的类和方法的集合。目前，在Java项目开发中提到JPA一般是指用Hibernate的实现，因为在Java的ORM框架中，只有Hibernate实现得最好。本案例使用JPA+MySQL数据库，MySQL需提前安装好。
 
-### 一、 Spring Boot配置文件详解
+### 一、新建一个 Spring Boot项目
+在Spring Boot工程中加入JPA的依赖spring-boot-starter-data-jpa、MySQL数据库的连接器依赖mysql-connector-java。
+
+### 二、配置数据源
+```
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver #MySQL驱动类
+    url: jdbc:mysql://localhost:3306/SpringCloud?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&serverTimezone=GMT
+    username: root
+    password: 123456
+
+  jpa:
+    hibernate:
+      ddl-auto: update # 第一次建表create  后面用update
+    show-sql: true
+```
+hibernate.hbm2ddl.auto 参数的作用主要用于：自动创建、更新、验证数据库表结构，有五个值，默认是 none 。
+
+create：每次加载 Hibernate 时都会删除上一次生成的表，然后根据 model 类再重新来生成新表，哪怕两次没有任何改变也要这样执行，这就是导致数据库表数据丢失的一个重要原因。
+
+create-drop：每次加载 Hibernate 时根据 model 类生成表，但是 sessionFactory 一关闭，表就自动删除。
+
+update：最常用的属性，第一次加载 Hibernate 时根据 model 类会自动建立起表的结构（前提是先建立好数据库），以后加载 Hibernate 时根据 model 类自动更新表结构，即使表结构改变了，但表中的行仍然存在，不会删除以前的行。要注意的是当部署到服务器后，表结构是不会被马上建立起来的，是要等应用第一次运行起来后才会。
+
+validate ：每次加载 Hibernate 时，验证创建数据库表结构，只会和数据库中的表进行比较，不会创建新表，但是会插入新值。
+
 
 1、自定义属性
 
