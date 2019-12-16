@@ -61,6 +61,30 @@ public class LucyController {
 
 3、自定义配置文件
 
+上面介绍了如何把配置属性写到application.yml配置文件中，并把配置属性读取到一个配置类中。有时属性太多，把所有的配置属性都写到application.yml配置文件中不太合适，这时需要自定义配置文件。例如例子中自定义了一个test.properties配置文件，其配置信息如下：
+```
+com.cqf.name=cqf
+com.cqf.age=12
+```
+如何将这个配置文件的属性赋值给一个JavaBean呢？需要在类名增加注解@PropertySource指明配置文件的路径。例如：
+```
+@Configuration
+@PropertySource(value = "classpath:test.properties")
+@ConfigurationProperties(prefix = "com.cqf")
+public class User {
+    private String name;
+    private int age;
+    //省略getter setter
+}
+```
+4、多个环境的配置文件
+实际开发过程中，可能有多个不同环境的配置文件，例如：开发环境、测试环境、生产环境等。Spring Boot支持程序启动时在配置文件application.yml中指定环境的配置文件，配置文件的格式为application-{profile}.propertites，其中{profile}对应环境标志，例如在application.yum加上配置：
+```
+spring:
+  profiles:
+    active: dev
+```
+则使用application-dev.propertites作为配置文件。
 
 
 二、接口工程
