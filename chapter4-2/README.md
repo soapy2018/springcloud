@@ -11,7 +11,7 @@ my:
  name: cqf
  age: 12
 ```
-如果要读取配置文件application.yml的属性值，只需在变量上加@Value("${属性名}")注解，就可以将属性值赋给变量，例如：
+如果要读取配置文件application.yml的属性值，只需在变量上加@Value("${属性名}")注解，就可以将属性值赋给变量，例如类MiyaController：
 ```
 @RestController
 public class MiyaController {
@@ -27,6 +27,41 @@ public class MiyaController {
     }
 }
 ```
+2、将配置文件的属性赋给实体类
+
+当有很多配置属性时，如果逐个地读取属性会非常麻烦，通常的做法会把这些属性名作为变量名来创建一个JavaBean的变量，并将属性值赋给JavaBean变量的值。例如用配置文件创建实体类ConfigBean：
+```
+@ConfigurationProperties(prefix = "my")
+@Component
+public class ConfigBean {
+    private String name;
+    private int age;
+    private int number;
+    private String uuid;
+    private int max;
+    private String value;
+    private String greeting;
+    //省略了getter setter ...
+}
+```
+注解@ConfigurationProperties表明是一个配置属性类，prefix属性表明会取配置文件application.yml的my属性组的内容构造类，同时注解@Component表明会被自动扫描注入IoC容器中。在类LucyController使用配置属性类ConfigBean：
+```
+@RestController
+@EnableConfigurationProperties({ConfigBean.class})
+public class LucyController {
+    @Autowired
+    ConfigBean configBean;
+    @RequestMapping(value = "/lucy")
+    public String lucy(){
+        return configBean.getGreeting()+" >>>>"+configBean.getName()+" >>>>"+ configBean.getUuid()+" >>>>"+configBean.getMax();
+    }
+}
+```
+注解@EnableConfigurationProperties使得被@ConfigurationProperties注解的beans自动被Environment属性配置。
+
+3、自定义配置文件
+
+
 
 二、接口工程
 
