@@ -5,13 +5,28 @@
 
 1、自定义属性
 
-可以在application.yml文件自定义一组属性，例如：
+可以在配置文件application.yml自定义一组属性，例如：
 ```
 my:
  name: cqf
  age: 12
 ```
-本例使用Zookeeper作为注册中心，需事先安装好Zookeeper。
+如果要读取配置文件application.yml的属性值，只需在变量上加@Value("${属性名}")注解，就可以将属性值赋给变量，例如：
+```
+@RestController
+public class MiyaController {
+
+    @Value("${my.name}")
+    private String name;
+    @Value("${my.age}")
+    private int age;
+
+    @RequestMapping(value = "/miya")
+    public String miya(){
+        return name+":"+age;
+    }
+}
+```
 
 二、接口工程
 
