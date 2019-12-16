@@ -1,4 +1,4 @@
-## Chapter 4 Examples
+## Chapter 4-2 Examples
 ====================================================================
 
 ### 一、 Spring Boot配置文件详解
@@ -84,23 +84,52 @@ spring:
   profiles:
     active: dev
 ```
-则使用application-dev.propertites作为配置文件。
+则使用application-dev.propertites作为配置文件。另外，我们也可以通过java -jar这种方式启动程序并指定配置文件，例如：
+```
+java -jar springbootdemo.jar -- spring.profiles.active=dev
+```
 
+### 二、运行状态监控Actuator
+Actuator的起步依赖为spring-boot-starter-actuator，需要注意的是 Spring Boot 2.0 相对于上个版本， Actuator 发生很多变化，所有 endpoints 默认情况下都已移至/actuator，就是多了根路径 actuator。
 
-二、接口工程
+您可以按如下方式公开所有端点：management.endpoints.web.exposure.include="*"
 
-dubbo-api工程里有一个接口IHello
+您可以通过以下方式显式启用/shutdown端点：management.endpoint.shutdown.enabled=true
 
-三、服务端
+要公开所有（已启用）网络端点除env端点之外：
+```
+management.endpoints.web.exposure.include="*"
+management.endpoints.web.exposure.exclude=env
+```
+例子：
+```
+server:
+  port: 8082
+management:
+    server:
+      port: 9001
+    endpoints:
+      web:
+        exposure:
+         include: "*"
+    endpoint:
+      shutdown:
+        enabled: true
+```
+management.server.port指定Actuator对外暴露Restful API接口的端口，如果不指定默认为应用程序的启动端口。
 
-dubbo-server工程添加Dubbo和接口工程的依赖，实现IHello接口，并用注解@Service暴露服务，在application.properties文件中配置Dubbo。
+1、查看运行程序的健康状态
 
-四、消费方
+GET请求：Actuator/health
 
-dubbo-client工程添加Dubbo和接口工程的依赖，编写远程调用Dubbo服务，@Reference注解可以用于生成远程服务代理，在application.properties文件中配置跟服务端一样的服务注册中心。
+2、查看运行程序的beans
 
-五、网关
+GET请求： Actuator/beans
 
-模块之间互相调用时，为了降低由网络波动带来的不确定性因素并提升系统安全性，生产环境中所有模块一般都运行在内网环境中，并单独提供一个工程作为网关服务，开放固定端口代理所有模块提供的服务，并通过拦截器验证所有外部请求以达到权限管理的目的。外部应用可能是App、网站或桌面客户端，为了达到通用性，网关服务一般为web服务，通过HTTP协议提供RESTful风格的API接口。
+3、使用Actuator关闭运行程序
 
-dubbo-gateway工程添加Dubbo和接口工程的依赖，并添加spring-boot-starter-web依赖（支持Web应用开发，包含Tomcat和Spring-MVC），并在application.properties文件中配置Dubbo，编写用于调用Dubbo服务的控制器，编写验证逻辑RequestInterceptor，配置拦截器WebAppConfiguration。
+POST请求：Actuator/shutdown
+
+4、使用shell连接Actuator
+
+除了REST API这种方式监控运行程序，还可通过shell连接Actuator，需添加起步依赖spring-boot-starter-remote-shell，端口是2000。但是该功能在Spring Boot 2.X版本后已经废弃。
