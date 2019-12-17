@@ -1,58 +1,108 @@
-## Chapter 4-6 Spring Boot整合Redis
+## Chapter 4-7 Spring Boot整合Swagger2，搭建RESTful API在线文档
 ====================================================================
 
-Redis是一个开源的、先进的key-value存储系统，可用于构建高性能的存储系统，支持的数据结构有字符串、哈希、列表、集合、排序集合、位图、超文本等。Redis是一宗NoSQL，读写非常快，支持丰富的数据结构，所有的操作都是原子的。
+Swagger，中文“拽”的意思，它是一个功能强大的在线API文档的框架，当前使用的版本是2.X，所以称为Swagger2。
 
-### 一、Redis安装
-官网上不提供windows版本的，但是微软在github上维护了一个版本。
-
-### 二、Spring Boot中使用Redis
-1、添加Redis的起步依赖spring-boot-starter-data-redis
-
-2、在配置文件application.properties添加Redis的数据源配置，例如：
+### 一、引入依赖
+在工程中添加依赖：
 ```
-# REDIS (RedisProperties)
-# Redis数据库索引（默认为0）
-spring.redis.database=0
-# Redis服务器地址
-spring.redis.host=localhost
-# Redis服务器连接端口
-spring.redis.port=6379
-# Redis服务器连接密码（默认为空）
-spring.redis.password=
-# 连接池最大连接数（使用负值表示没有限制）
-spring.redis.jedis.pool.max-active=8
-# 连接池最大阻塞等待时间（使用负值表示没有限制）
-spring.redis.jedis.pool.max-wait=-1
-# 连接池中的最大空闲连接
-spring.redis.jedis.pool.max-idle=8
-# 连接池中的最小空闲连接
-spring.redis.jedis.pool.min-idle=0
-# 连接超时时间（毫秒）
-spring.redis.timeout=5000
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>2.6.1</version>
+</dependency>
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>2.6.1</version>
+</dependency>
 ```
-3、创建Dao层
 
-数据操作层的RedisDao类通过@Repository注解来注入Spring Ioc容器中，该类通过自动注入StringRedisTemplate的bean来对Redis数据库中的字符串类型的数据进行操作。代码如下：
+### 二、配置Swagger2
+写一个配置类Swagger2，添加注解@Configuration表明是一个配置类，同时加注解@EnableSwagger2开启Swagger2的功能。在配置类Swagger2中需要注入一个Docket的Bean，该Bean用apinfo方法初始化文档的描述信息，同时指定包扫描的路径。代码如下：
 ```
-@Repository
-public class RedisDao {
+@Configuration
+@EnableSwagger2
+public class Swagger2 {
 
-    @Autowired
-    private StringRedisTemplate template;
-
-    public  void setKey(String key,String value){
-        ValueOperations<String, String> ops = template.opsForValue();
-        ops.set(key,value,1, TimeUnit.MINUTES);//1分钟过期
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.cqf.web"))
+                .paths(PathSelectors.any())
+                .build();
     }
-
-    public String getValue(String key){
-        ValueOperations<String, String> ops = template.opsForValue();
-        return ops.get(key);
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("springboot利用swagger构建api文档")
+                .description("简单优雅的restfun风格，https://blog.csdn.net/soapy2010")
+                .termsOfServiceUrl("https://blog.csdn.net/soapy2010")
+                .version("1.0")
+                .build();
     }
 }
 ```
+### 三、数据操作层
+本例复用4-6 JPA+MySQL
+
+### 四、Web层
+在Web层通过GET、POST、DELETE、PUT这四种HTTP方法，构建一组以资源为中心的RESTful风格的API接口。代码如下：
+```
+RequestMapping("/user")
+@RestController
+public class UserController {
+
+    @Autowired
+    UserService userService;
+
+    @ApiOperation(value="用户列表", notes="用户列表")
+    @RequestMapping(value={""}, method= RequestMethod.GET)
+    public List<User> getUsers() {
+        List<User> users = userService.findAll();
+        return users;
+    }
+
+    @ApiOperation(value="创建用户", notes="创建用户")
+    @RequestMapping(value="", method=RequestMethod.POST)
+    public User postUser(@RequestBody User user) {
+      return   userService.saveUser(user);
+
+    }
+    @ApiOperation(value="获用户细信息", notes="根据url的id来获取详细信息")
+
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public User getUser(@PathVariable Long id) {
+        return userService.findUserById(id);
+    }
+
+    @ApiOperation(value="更新信息", notes="根据url的id来指定更新用户信息")
+    @RequestMapping(value="/{id}", method= RequestMethod.PUT)
+    public User putUser(@PathVariable Long id, @RequestBody User user) {
+        User user1 = new User();
+        user1.setUsername(user.getUsername());
+        user1.setPassword(user.getPassword());
+        user1.setId(id);
+       return userService.updateUser(user1);
+
+    }
+    @ApiOperation(value="删除用户", notes="根据url的id来指定删除用户")
+    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    public String deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return "success";
+    }
+
+    @ApiIgnore//使用该注解忽略这个API
+    @RequestMapping(value = "/hi", method = RequestMethod.GET)
+    public String  jsonTest() {
+        return " hi you!";
+    }
+}
+```
+
 ### 运行
-启动单元测试验证数据的写入和读取。   
+启动程序，在浏览器上访问http://localhost:8047/swagger-ui.html    
 
 
