@@ -61,15 +61,5 @@ public class UserController {
     public String  jsonTest() {
         return " hi you!";
     }
-
-
-
-//    @GetMapping("/{username}")
-//    public User getUser(@PathVariable("username")String username){
-//       return userService.findUserByName(username);
-//
-//    }
-
-
-
+    
 }
