@@ -49,7 +49,42 @@ public class User {
 }
 ```
 ### 四、创建DAO层
-数据库库访问层DAO，编写一个UserDao接口，继承JpaRepository接口，
+数据库库访问层DAO，编写一个UserDao接口，继承JpaRepository接口，就能对数据库进行读写操作。在UserDao类写一个findByUsername方法，无需额外编码，JPA自动根据关键字理解这个方法需求。代码如下：
+```
+public interface UserDao extends JpaRepository<User, Long>{
+
+	User findByUsername(String username);
+}
+```
+
+### 五、创建Service层
+在UserService类中注入UserDao，并写一个根据用户名获取用户的方法，通过调用注入类的findByUsername方法实现。代码如下：
+```
+@Service
+public class UserService {
+    @Autowired
+    private UserDao userRepository;
+    public User findUserByName(String username){
+        return userRepository.findByUsername(username);
+    }
+}
+```
+
+### 六、创建Controller层
+在UserController类写一个GET类型的API接口，其中注解@PathVariable可以获取RESTful风格的Url路径上的参数。代码如下：
+```
+@RequestMapping("/user")
+@RestController
+public class UserController {
+
+    @Autowired
+    UserService userService;
+    @GetMapping("/{username}")
+    public User getUser(@PathVariable("username")String username){
+       return userService.findUserByName(username);
+    }
+}
+```
 
 
 
