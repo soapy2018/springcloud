@@ -1,7 +1,7 @@
-## Chapter 4-7 Spring Boot整合Swagger2，搭建RESTful API在线文档
+## Chapter 5-2 服务注册和发现Eureka
 ====================================================================
 
-Swagger，中文“拽”的意思，它是一个功能强大的在线API文档的框架，当前使用的版本是2.X，所以称为Swagger2。
+Eureka来源于古希腊词汇，意为“发现了”。在软件领域，Eureka是Netflix在线影片公司开源的一个服务注册与发现的组件。Eureka分为Eureka Server和Eureka Client，Eureka Server为Eureka服务注册中心，Eureka Client为Eureka客户端。Eureka和其他组件，比如负载均衡组件Ribbon、熔断器组件Hystrix、熔断器监控组件Hystrix Dashboard、熔断器聚合监控Turbine，以及网关Zuul组件相互配合，能够轻松实现服务注册和发现、负载均衡、熔断和智能路由等功能，这些组件都是Netflix公司开源的，一起被称为Netflix OSS组件。Netflix OSS组件由Spring Cloud整合为Spring Cloud Netflix组件，它是Spring Cloud架构微服务的核心组件，也是基础组件。
 
 ### 一、引入依赖
 在工程中添加依赖：
