@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c33ce559-28b4-4038-a90d-60566c68d097" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../chapter4-7/src/main/java/com/cqf/web/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../chapter4-7/src/main/java/com/cqf/web/UserController.java" afterDir="false" />
-    </list>
+    <list default="true" id="c33ce559-28b4-4038-a90d-60566c68d097" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
