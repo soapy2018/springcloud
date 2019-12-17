@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7bb4d61c-07bb-4bf2-adc6-e56050f2f746" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../chapter4-6/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../chapter4-6/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../chapter4-6/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../chapter4-6/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../chapter4-6/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chapter4-6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../chapter4-6/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -319,12 +315,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1576495660315</updated>
-      <workItem from="1576495663479" duration="8908000" />
+      <workItem from="1576495663479" duration="9213000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8908000" />
+    <option name="totallyTimeSpent" value="9213000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
