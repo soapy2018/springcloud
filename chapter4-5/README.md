@@ -85,6 +85,7 @@ public class UserController {
     }
 }
 ```
-
+### 运行
+先创建好数据库SpringCloud，运行程序，再表中插入一条数据（语句见import.sql），然后在浏览器输入http://localhost:8045/user/cqf 可从数据库读取记录返回浏览器显示。   
 
 
