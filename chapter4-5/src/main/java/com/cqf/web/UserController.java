@@ -19,7 +19,4 @@ public class UserController {
        return userService.findUserByName(username);
 
     }
-
-
-
 }
