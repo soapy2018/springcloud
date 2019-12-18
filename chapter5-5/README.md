@@ -1,5 +1,44 @@
-## Chapter 5-2 服务注册和发现Eureka
+## Chapter 5-5 构建高可用的Eureka Server集群
 ====================================================================
+
+在实际项目中，可能有几十个或几百个的微服务实例，这时Eureka Server可能成为瓶颈，所以需要对Eureka Server进行高可用集群部署。本案例在5-2基础上进行改造。
+
+1、更改eureka-server的配置文件，采用多profile的格式。如下：
+```
+---
+spring:
+   profiles: peer1
+   application:
+      name: eureka-server1
+server:
+   port: 8551
+eureka:
+   instance:
+      hostname: peer1
+   client:
+      serviceUrl:
+         defaultZone: http://peer2:8552/eureka/
+
+---
+spring:
+   profiles: peer2
+   application:
+      name: eureka-server2
+server:
+   port: 8552
+eureka:
+   instance:
+      hostname: peer2
+   client:
+      serviceUrl:
+         defaultZone: http://peer1:8551/eureka/
+```
+上述配置定义了两个profile文件，分别为peer1和peer2，它们的hostname分别为peer1和peer2（在实际开发中可能是具体的服务器IP地址），它们的端口分别为8551和8552。因为是本地搭建的Eureka Server集群，所有需要添加本地host配置：
+```
+127.0.0.1 peer1
+127.0.0.1 peer2
+```
+2、
 
 Eureka来源于古希腊词汇，意为“发现了”。在软件领域，Eureka是Netflix在线影片公司开源的一个服务注册与发现的组件。Eureka分为Eureka Server和Eureka Client，Eureka Server为Eureka服务注册中心，Eureka Client为Eureka客户端。Eureka和其他组件，比如负载均衡组件Ribbon、熔断器组件Hystrix、熔断器监控组件Hystrix Dashboard、熔断器聚合监控Turbine，以及网关Zuul组件相互配合，能够轻松实现服务注册和发现、负载均衡、熔断和智能路由等功能，这些组件都是Netflix公司开源的，一起被称为Netflix OSS组件。Netflix OSS组件由Spring Cloud整合为Spring Cloud Netflix组件，它是Spring Cloud架构微服务的核心组件，也是基础组件。Eureka主要包含3种角色：
 + Register Service：服务注册中心，它是一个Eureka Server，提供服务注册和发现的功能。
