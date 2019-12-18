@@ -15,108 +15,73 @@ Eureka来源于古希腊词汇，意为“发现了”。在软件领域，Eurek
 </modules>
 ```
 ### 一、编写Eureka Server
-
-  
- 
-在工程中添加依赖：
+1、创建工程eureka-server，在工程中添加依赖：
 ```
 <dependency>
-    <groupId>io.springfox</groupId>
-    <artifactId>springfox-swagger2</artifactId>
-    <version>2.6.1</version>
-</dependency>
-<dependency>
-    <groupId>io.springfox</groupId>
-    <artifactId>springfox-swagger-ui</artifactId>
-    <version>2.6.1</version>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 </dependency>
 ```
-
-### 二、配置Swagger2
-写一个配置类Swagger2，添加注解@Configuration表明是一个配置类，同时加注解@EnableSwagger2开启Swagger2的功能。在配置类Swagger2中需要注入一个Docket的Bean，该Bean用apinfo方法初始化文档的描述信息，同时指定包扫描的路径。代码如下：
+2、在配置文件application.yml添加Eureka Server相关配置，默认情况下，Eureka Server会向自己注册，可以通过配置eureka.client.registerWithEureka和eureka.client.fetchRegistry为false，防止自己注册自己。示例如下：
 ```
-@Configuration
-@EnableSwagger2
-public class Swagger2 {
-
-    @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.cqf.web"))
-                .paths(PathSelectors.any())
-                .build();
-    }
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("springboot利用swagger构建api文档")
-                .description("简单优雅的restfun风格，https://blog.csdn.net/soapy2010")
-                .termsOfServiceUrl("https://blog.csdn.net/soapy2010")
-                .version("1.0")
-                .build();
-    }
-}
+server:
+  port: 8521
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 ```
-### 三、数据操作层
-本例复用4-6 JPA+MySQL
-
-### 四、Web层
-在Web层通过GET、POST、DELETE、PUT这四种HTTP方法，构建一组以资源为中心的RESTful风格的API接口。代码如下：
+3、在工程的启动类加上@EnableEurekaServer注解，开启Eureka Server功能。代码如下：
 ```
-RequestMapping("/user")
-@RestController
-public class UserController {
+@EnableEurekaServer
+@SpringBootApplication
+public class EurekaServerApplication {
 
-    @Autowired
-    UserService userService;
-
-    @ApiOperation(value="用户列表", notes="用户列表")
-    @RequestMapping(value={""}, method= RequestMethod.GET)
-    public List<User> getUsers() {
-        List<User> users = userService.findAll();
-        return users;
-    }
-
-    @ApiOperation(value="创建用户", notes="创建用户")
-    @RequestMapping(value="", method=RequestMethod.POST)
-    public User postUser(@RequestBody User user) {
-      return   userService.saveUser(user);
-
-    }
-    @ApiOperation(value="获用户细信息", notes="根据url的id来获取详细信息")
-
-    @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public User getUser(@PathVariable Long id) {
-        return userService.findUserById(id);
-    }
-
-    @ApiOperation(value="更新信息", notes="根据url的id来指定更新用户信息")
-    @RequestMapping(value="/{id}", method= RequestMethod.PUT)
-    public User putUser(@PathVariable Long id, @RequestBody User user) {
-        User user1 = new User();
-        user1.setUsername(user.getUsername());
-        user1.setPassword(user.getPassword());
-        user1.setId(id);
-       return userService.updateUser(user1);
-
-    }
-    @ApiOperation(value="删除用户", notes="根据url的id来指定删除用户")
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    public String deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return "success";
-    }
-
-    @ApiIgnore//使用该注解忽略这个API
-    @RequestMapping(value = "/hi", method = RequestMethod.GET)
-    public String  jsonTest() {
-        return " hi you!";
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(EurekaServerApplication.class, args);
+	}
 }
 ```
 
-### 运行
-启动程序，在浏览器上访问http://localhost:8047/swagger-ui.html    
+此时启动工程eureka-server，浏览器访问Eureka Server主页http://localhost:8521/ 发现没有任何注册的实例。
+
+### 二、编写Eureka Client
+1、创建工程eureka-client，在工程中添加依赖：
+```
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+</dependency>
+```
+2、在配置文件配置Eureka Client相关配置，需配置程序名、端口、服务注册地址。配置如下：
+```
+server:
+  port: 8522
+spring:
+  application:
+    name: eureka-client
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8521/eureka/
+```
+3、在启动类加上注解@EnableEurekaClient开启Eureka Client功能。代码如下：
+```
+@SpringBootApplication
+@EnableEurekaClient
+public class EurekaClientApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(EurekaClientApplication.class, args);
+	}
+}
+```
+
+启动Eureka-Client工程，控制台会打印出注册信息，同时再访问Eureka Server主页时会显示多了要给注册实例。
+
 
 
