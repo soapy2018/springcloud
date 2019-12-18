@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: eureka-ribbon-client
+server:
+  port: 8633
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8631/eureka/
