@@ -13,7 +13,6 @@ eureka:
          defaultZone: http://peer2:8552/eureka/
 
 ---
-
 spring:
    profiles: peer2
    application:
