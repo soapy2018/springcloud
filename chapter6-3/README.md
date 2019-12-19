@@ -208,3 +208,19 @@ hi cqf,i am from port:8635
 ### 源码剖析
 Ribbon的负载均衡主要是通过LoadBalancerClient来实现的，而LoadBalancerClient具体交给了ILoadBalancer来处理，ILoadBalancer通过配置IRule、IPing等，向Eureka Client获取注册列表的信息，默认每10秒向Eureka Client发送一次Ping检查是否需要更新服务的注册列表信息。在得到服务的注册信息后，ILoadBalancer根据IRule的策略进行负载均衡。而RestTemplate加上@LoadBalance注解后在远程调度时能够负载均衡，主要是维护了一个被@LoadBalance注解的RestTemplate列表，并给该列表中的RestTemplate对象添加了拦截器。在拦截器方法中，将远程调度方法交给了Ribbon的负载均衡器LoadBalancerClient去处理，从而达到了负载均衡的目的。
 
+Feign的实现过程：
+
+（1）首先通过@EnableFeignClient注解开启FeignClient功能。只有这个功能开启，才会在程序启动时开启对@FeignClient注解的包扫描。
+
+（2）根据Feign的规则实现接口，并在接口上面加上@FeignClient注解。
+
+（3）程序启动后，会进行包扫描，扫描所有的@FeignClient注解的类，并将这些信息注入IoC容器中。
+
+（4）当接口的方法被调用时，通过JDK的代理生成具体的RequestTemplate模板对象。
+
+（5）根据RequestTemplate生成Http请求的Request对象。
+
+（6）Request对象交给Client去处理，其中Client的网络请求框架可以时HttpURLConnection、HttpClient和OKHttp。
+
+（7）最好Client被封装到LoadBalancerClient类，这个类结合Ribbon做到了负载均衡。
+
