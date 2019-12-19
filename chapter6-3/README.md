@@ -1,4 +1,4 @@
-## Chapter 6-3 使用RestTemplate和Ribbon来消费服务
+## Chapter 6-3 负载均衡（RestTemplate+Ribbon OR Feign）
 ====================================================================
 
 常见的负载均衡有两种方式：一是独立进程单元，通过负载均衡策略，将请求转发到不同的执行单元，例如Nginx；另一种是将负载均衡逻辑以代码的形式封装到服务消费者的客户端上，服务消费者客户端维护了一份服务提供者的信息列表，有了信息列表，通过负载均衡策略将请求分摊给多个服务提供者，从而达到负载均衡的目的。
@@ -12,6 +12,7 @@ Ribbon是Netfilx公司开源的一个负载均衡的组件，它属于上述的�
   <module>eureka-server</module>
   <module>eureka-ribbon-client</module>
   <module>ribbon-client</module>
+  <module>eureka-feign-client</module>
 </modules>
 ```
 ### 使用RestTemplate消费服务
@@ -138,4 +139,68 @@ server:
 ```
 example.com:80
 google.com:80
+```
+
+###声明式调用Feign
+Feign受Retrofit、JAXRS-2.0和WebSocket的影响，采用了声明式API接口风格，将Java Http客户端绑定到它的内部。eureka-feign-client工程是Feign调用的一个例子。
+
+1、首先添加Feign的起步依赖```spring-cloud-starter-openfeign```，并向注册中心注册。在程序的启动类加上@EnableFeignClients开启Feign Client功能。代码如下：
+```
+@SpringBootApplication
+@EnableEurekaClient
+@EnableFeignClients
+public class EurekaFeignClientApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(EurekaFeignClientApplication.class, args);
+	}
+}
+```
+2、实现一个简单的Feign Client：新建一个EurekaClientFeign接口，在接口上加@FeignClient注解来声明一个Feign Client，其中value为远程调用其他服务的服务名，FeignConfig.class为Feign Client的配置类。在EurekaClientFeign内部有一个sayHiFromClientEureka()方法，该方法通过Feign调用eureka-client服务的"/hi" API接口。代码如下：
+```
+@FeignClient(value = "eureka-client",configuration = FeignConfig.class)
+public interface EurekaClientFeign {
+    @GetMapping(value = "/hi")
+    String sayHiFromClientEureka(@RequestParam(value = "name") String name);
+}
+```
+3、编写Feign Client的配置类：新建配置类FeignConfig，加上@Configuration注解，并注入一个名为feignRetryer的Retryer的Bean。注入该Bean后，Feign在远程调用失败后会进行重试。代码如下：
+```
+@Configuration
+public class FeignConfig {
+
+    @Bean
+    public Retryer feignRetryer() {
+        return new Retryer.Default(100, SECONDS.toMillis(1), 5);
+    }
+}
+```
+4、在Server层的HiService类注入一个EurekaClientFeign的Bean，通过该Bean调用sayHiFromClientEureka()方法。代码如下：
+```
+@Service
+public class HiService {
+
+    @Autowired
+    EurekaClientFeign eurekaClientFeign;
+    public String sayHi(String name){
+        return  eurekaClientFeign.sayHiFromClientEureka(name);
+    }
+}
+```
+5、在Controller层的HiController类写一个API接口"/hi"，该接口调用自动注入的HiService的sayHi()方法，HiService通过EurekaClientFeign远程调用eureka-client服务的API接口"/hi"。代码如下：
+```
+@RestController
+public class HiController {
+    @Autowired
+    HiService hiService;
+    @GetMapping("/hi")
+    public String sayHi(@RequestParam( defaultValue = "cqf",required = false)String name){
+        return hiService.sayHi(name);
+    }
+}
+```
+6、启动工程eureka-feign-client，端口为8636，多次访问http://localhost:8636/hi?name=cqf ，浏览器轮流显示：
+```
+hi cqf,i am from port:8634
+hi cqf,i am from port:8635
 ```
