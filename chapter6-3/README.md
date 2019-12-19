@@ -204,3 +204,7 @@ public class HiController {
 hi cqf,i am from port:8634
 hi cqf,i am from port:8635
 ```
+
+### 源码剖析
+Ribbon的负载均衡主要是通过LoadBalancerClient来实现的，而LoadBalancerClient具体交给了ILoadBalancer来处理，ILoadBalancer通过配置IRule、IPing等，向Eureka Client获取注册列表的信息，默认每10秒向Eureka Client发送一次Ping检查是否需要更新服务的注册列表信息。在得到服务的注册信息后，ILoadBalancer根据IRule的策略进行负载均衡。而RestTemplate加上@LoadBalance注解后在远程调度时能够负载均衡，主要是维护了一个被@LoadBalance注解的RestTemplate列表，并给该列表中的RestTemplate对象添加了拦截器。在拦截器方法中，将远程调度方法交给了Ribbon的负载均衡器LoadBalancerClient去处理，从而达到了负载均衡的目的。
+
