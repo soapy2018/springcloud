@@ -14,6 +14,21 @@ Ribbon是Netfilx公司开源的一个负载均衡的组件，它属于上述的�
   <module>ribbon-client</module>
 </modules>
 ```
+### 使用RestTemplate消费服务
+RestTemplate是Spring Resources中一个访问第三方RESTful API接口的网络请求框架。RestTemplate是用来消费REST服务的，所以RestTemplate的主要方法都与REST的HTTP协议的一些方法紧密相连，例如POST、PUT、DELETE、GET等，所以用RestTemplate很容易构建RESTful API。它支持XML、JSON数据格式，默认实现了序列化，可以自动将JSON字符串转换为实体。代码例如eureka-ribbon-client工程的RestTestController类：
+```
+@RestController
+public class RestTestController {
+
+    @GetMapping("/testRest")
+    public String testRest(){
+        RestTemplate restTemplate=new RestTemplate();
+        return restTemplate.getForObject("https://www.baidu.com/",String.class);
+    }
+}
+
+```
+上述代码getForObject()方法可以获取网页Html代码，并在"/testRest"接口返回该网页的Html字符串。
 
 ### 使用RestTemplate和Ribbon来消费服务
 1、服务注册中心
