@@ -65,7 +65,7 @@ public class RibbonService {
     }
 }
 ```
-（4）写一个RibbonController类，加上@RestController开启RestController功能，写一个“/hi”GET类型接口，调用RibbonService类的hi()方法。代码如下：
+（4）写一个RibbonController类，加上@RestController开启RestController功能，写一个"/hi" GET类型接口，调用RibbonService类的hi()方法。代码如下：
 ```
 @RestController
 public class RibbonController {
@@ -85,3 +85,42 @@ hi cqf,i am from port:8634
 hi cqf,i am from port:8635
 ```
 
+### 直接使用LoadBalancerClient来实现负载均衡
+其它一样，在服务消费工程eureka-ribbon-client，增加一个接口"/testRibbon"，在testRibbon()方法中通过LoadBalancerClient的choose()方法获取服务实例的信息。代码如下：
+```
+@RestController
+public class RibbonController {
+    @Autowired
+    private LoadBalancerClient loadBalancer;
+
+    @GetMapping("/testRibbon")
+    public String  testRibbon() {
+        ServiceInstance instance = loadBalancer.choose("eureka-client");
+      //  URI uri = URI.create(String.format("http://%s:%s", instance.getHost(), instance.getPort()));
+        return instance.getHost()+":"+instance.getPort();
+    }
+}
+```
+多次访问http://localhost:8632/testRibbon ，浏览器轮流显示：
+```
+LAPTOP-66FA2IS3:8634
+LAPTOP-66FA2IS3:8635
+```
+负载均衡器LoadBalancerClient是从eureka-client获取服务注册列表信息的，并将服务注册信息缓存，在调用Choose()方法时，根据负载均衡策略选择一个服务实例。LoadBalancerClient也可以不从eureka-client获取注册列表信息，这时需要自己维护一份注册列表信息。查看工程ribbon-client的配置：
+```
+stores:
+  ribbon:
+    listOfServers: example.com,google.com
+ribbon:
+  eureka:
+   enabled: false
+server:
+  port: 8633
+```
+配置了一个stores服务，通过listOfServers配置两个不同URL地址的服务实例，并通过配置ribbon.eureka.enabled=false来禁止调用Eureka Client获取注册列表。
+
+启动工程，端口为8633，多次访问http://localhost:8633/testRibbon ，浏览器轮流显示：
+```
+example.com:80
+google.com:80
+```
