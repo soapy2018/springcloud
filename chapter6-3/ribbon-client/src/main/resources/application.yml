@@ -6,4 +6,4 @@ ribbon:
   eureka:
    enabled: false
 server:
-  port: 8634
+  port: 8633
