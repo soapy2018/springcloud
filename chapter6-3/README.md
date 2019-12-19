@@ -3,7 +3,7 @@
 
 常见的负载均衡有两种方式：一是独立进程单元，通过负载均衡策略，将请求转发到不同的执行单元，例如Nginx；另一种是将负载均衡逻辑以代码的形式封装到服务消费者的客户端上，服务消费者客户端维护了一份服务提供者的信息列表，有了信息列表，通过负载均衡策略将请求分摊给多个服务提供者，从而达到负载均衡的目的。
 
-Ribbo是Netfilx公司开源的一个负载均衡的组件，它属于上述的第二种方式，是将负载均衡逻辑封装在客户端中，并运行在客户端的进程里。在Spring Cloud构建的微服务系统中，Ribbon作为服务消费者的负载均衡器，有两种使用方式：一种是和RestTemplate相结合；另一种是和Feign相结合。Feign已经默认集成了Ribbon。
+Ribbon是Netfilx公司开源的一个负载均衡的组件，它属于上述的第二种方式，是将负载均衡逻辑封装在客户端中，并运行在客户端的进程里。在Spring Cloud构建的微服务系统中，Ribbon作为服务消费者的负载均衡器，有两种使用方式：一种是和RestTemplate相结合；另一种是和Feign相结合。Feign已经默认集成了Ribbon。
 
 本案例包含的工程：
 ```
@@ -77,5 +77,11 @@ public class RibbonController {
         return ribbonService.hi(name);
     }
 }
+```
+
+4、启动eureka-server工程，端口为8631，启动两个eureka-client实例，端口分别为8634、8635，启动eureka-ribbon-client工程，端口为8632，浏览器多次访问http://localhost:8632/hi?name=cqf ，会轮流显示：
+```
+hi cqf,i am from port:8634
+hi cqf,i am from port:8635
 ```
 
