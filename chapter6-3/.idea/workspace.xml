@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40991e28-a6ef-4f73-9703-1a289c97e810" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-client/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-client/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-ribbon-client/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-ribbon-client/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ribbon-client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ribbon-client/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ribbon-client/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ribbon-client/src/main/resources/application.yml" afterDir="false" />
-    </list>
+    <list default="true" id="40991e28-a6ef-4f73-9703-1a289c97e810" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/eureka-server/target/" />
     <ignored path="$PROJECT_DIR$/eureka-ribbon-client/target/" />
@@ -45,7 +33,7 @@
         <entry file="file://$PROJECT_DIR$/eureka-feign-client/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="171">
-              <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="54" />
+              <caret line="24" column="24" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -72,7 +60,7 @@
         <entry file="file://$PROJECT_DIR$/eureka-feign-client/src/main/resources/application.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="190">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -81,7 +69,7 @@
         <entry file="file://$PROJECT_DIR$/eureka-feign-client/src/main/java/com/cqf/web/HiController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="155">
-              <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+              <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -103,7 +91,7 @@
         <entry file="file://$PROJECT_DIR$/eureka-feign-client/src/main/java/com/cqf/client/config/FeignConfig.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="176">
-              <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+              <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
               <folding>
                 <element signature="e#348#349#0" expanded="true" />
                 <element signature="e#419#420#0" expanded="true" />
@@ -115,8 +103,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/eureka-feign-client/src/main/java/com/cqf/client/EurekaClientFeign.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+            <state relative-caret-position="228">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -660,7 +648,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1576656474343</updated>
-      <workItem from="1576656481213" duration="18732000" />
+      <workItem from="1576656481213" duration="20148000" />
     </task>
     <servers />
   </component>
@@ -670,7 +658,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18732000" />
+    <option name="totallyTimeSpent" value="20148000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
@@ -694,7 +682,7 @@
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4995958" visible="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4995958" weight="0.3285968" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -863,7 +851,7 @@
     <entry file="file://$PROJECT_DIR$/eureka-feign-client/src/main/resources/application.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
@@ -877,7 +865,7 @@
     <entry file="file://$PROJECT_DIR$/eureka-feign-client/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
-          <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="54" />
+          <caret line="24" column="24" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="54" />
         </state>
       </provider>
     </entry>
@@ -902,14 +890,14 @@
     <entry file="file://$PROJECT_DIR$/eureka-feign-client/src/main/java/com/cqf/web/HiController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="155">
-          <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+          <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/eureka-feign-client/src/main/java/com/cqf/client/config/FeignConfig.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
-          <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
           <folding>
             <element signature="e#348#349#0" expanded="true" />
             <element signature="e#419#420#0" expanded="true" />
@@ -919,8 +907,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/eureka-feign-client/src/main/java/com/cqf/client/EurekaClientFeign.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        <state relative-caret-position="228">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
