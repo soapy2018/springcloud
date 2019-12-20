@@ -89,6 +89,47 @@ hi cqf,i am from port:8882
 hi,cqf,sorry,error!
 ```
 
+### 使用Hystrix Dashboard监控熔断器的状态
+应用整合Hystrix，应包含```spring-boot-starter-actuator```依赖，就会存在一个/actuator/hystrix.stream 端点，用来监控Hystrix Command。当被@HystrixCommand 注解的方法被调用时，就会产生监控信息，并暴露到该端点中。当然，该端点默认是不会暴露的， springboot2.x使用了endpoint，需使用如下配置将其暴露。
+```
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'hystrix.stream'
+```
+这样就可以了，但是actuator/health就无法访问了，所以还可以选择全部放开。
+```
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+```
+至此，我们已可通过/actuator/hystrix.stream 端点观察Hystrix运行情况，但文字形式的监控数据很不直观。现实项目中一般都需要一个可视化的界面，这样才能迅速了解系统的运行情况。Hystrix提供了一个轮子——Hystrix Dashboard，它的作用只有一个，那就是将文字形式的监控数据转换成图表展示。
+
+1、使用Hystrix Dashboard需要添加依赖：
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+</dependency>
+
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+</dependency>
+```
+需要说明的是，Feign也需要，因为Feign自带的Hystrix依赖不是起步依赖。
+
+2、在程序启动类添加注解@EnableHystrixDashboard(测试发现Feign也需要@EnableHystrix注解)
+
+
 
 
 
