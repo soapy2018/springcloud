@@ -153,7 +153,7 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8881/eureka/
 ```
-这样，Tubine即可聚合eureka-ribbon-client,eureka-feign-client两个服务的/actuator/hystrix.stream 信息，并暴露在http://localhost:8885/turbine.stream ，将该地址贴到http://localhost:8883/hystrix或http://localhost:8884/hystrix的Hystrix Dashboard上，即可看到类似如下的图表：
+这样，Tubine即可聚合eureka-ribbon-client,eureka-feign-client两个服务的/actuator/hystrix.stream 信息，并暴露在http://localhost:8885/turbine.stream ，将该地址贴到http://localhost:8883/hystrix 或 http://localhost:8884/hystrix 的Hystrix Dashboard上，即可看到类似如下的图表：
 ![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image4.png)
 
 注: 如果界面一直提示loading，那么是因为没有进行请求访问，只需在浏览器上输入请求，然后刷新该界面就可以进行查看了。
