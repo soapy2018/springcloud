@@ -133,6 +133,30 @@ management:
 将上文的/actuator/hystrix.stream 端点的地址贴到图中，并指定Title，然后点击Monitor Stream 按钮，即可看到类似如下的图表：
 ![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image3.png)
 
+### 使用Turbine聚合监控
+在使用Hystrix Dashboard组件监控服务的熔断器状况时，每个服务都有一个Hystrix Dashboard主页，当服务数量很多时，监控非常不便。为了同时监控多个服务的熔断器状况，Netflix开源了另一个组件Turbine。Turbine用于聚合多个Hystrix Dashboard，将多个Hystrix Dashboard组件的数据放在一个页面展示，进行集中监控。
+
+新建工程eureka-monitor-client，添加依赖```spring-cloud-starter-netflix-turbine```，启动程序添加注解@EnableTurbine开启，配置如下：
+```
+spring:
+  application:
+    name: service-turbine
+server:
+  port: 8885
+turbine:
+  aggregator:
+    clusterConfig: default
+  appConfig: eureka-ribbon-client,eureka-feign-client
+  clusterNameExpression: new String("default")
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8881/eureka/
+```
+这样，Tubine即可聚合eureka-ribbon-client,eureka-feign-client两个服务的/actuator/hystrix.stream 信息，并暴露在http://localhost:8885/turbine.stream ，将该地址贴到Hystrix Dashboard上，即可看到类似如下的图表：
+![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image4.png)
+
+注: 如果界面一直提示loading，那么是因为没有进行请求访问，只需在浏览器上输入请求，然后刷新该界面就可以进行查看了。
 
 
 
