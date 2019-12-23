@@ -141,7 +141,7 @@ example.com:80
 google.com:80
 ```
 
-###声明式调用Feign
+### 声明式调用Feign
 Feign受Retrofit、JAXRS-2.0和WebSocket的影响，采用了声明式API接口风格，将Java Http客户端绑定到它的内部。eureka-feign-client工程是Feign调用的一个例子。
 
 1、首先添加Feign的起步依赖```spring-cloud-starter-openfeign```，并向注册中心注册。在程序的启动类加上@EnableFeignClients开启Feign Client功能。代码如下：
