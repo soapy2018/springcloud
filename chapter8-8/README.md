@@ -129,6 +129,7 @@ management:
 
 2、在程序启动类添加注解@EnableHystrix、@EnableHystrixDashboard(测试发现Feign也需要@EnableHystrix注解)，开启熔断器监控功能。
 启动工程eureka-server、eureka-client、和eure-ribbon-client、eureka-feign-client后，端口分别为8881、8882、8883、8884，访问浏览器http://localhost:8883/hystrix 和 http://localhost:8884/hystrix ，都能看到页面
+![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image2.png)
 
 
 
