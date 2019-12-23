@@ -128,8 +128,9 @@ management:
 需要说明的是，Feign也需要，因为Feign自带的Hystrix依赖不是起步依赖。
 
 2、在程序启动类添加注解@EnableHystrix、@EnableHystrixDashboard(测试发现Feign也需要@EnableHystrix注解)，开启熔断器监控功能。
-启动工程eureka-server、eureka-client、和eure-ribbon-client、eureka-feign-client后，端口分别为8881、8882、8883、8884，访问浏览器http://localhost:8883/hystrix 和 http://localhost:8884/hystrix ，都能看到页面
+启动工程eureka-server、eureka-client、和eure-ribbon-client、eureka-feign-client后，端口分别为8881、8882、8883、8884，访问浏览器http://localhost:8883/hystrix 和 http://localhost:8884/hystrix ，都能看到页面：
 ![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image2.png)
+将上文的/actuator/hystrix.stream 端点的地址贴到图中，并指定Title，然后点击Monitor Stream 按钮，即可看到类似如下的图表：
 
 
 
