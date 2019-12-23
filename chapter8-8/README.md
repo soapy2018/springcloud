@@ -127,7 +127,7 @@ management:
 ```
 需要说明的是，Feign也需要，因为Feign自带的Hystrix依赖不是起步依赖。
 
-2、在程序启动类添加注解@EnableHystrixDashboard(测试发现Feign也需要@EnableHystrix注解)
+2、在程序启动类添加注解@EnableHystrix、@EnableHystrixDashboard(测试发现Feign也需要@EnableHystrix注解)
 
 
 
