@@ -10,7 +10,115 @@ Zuul作为路由网关组件，在微服务架构中有着非常重要的作用�
 + 网关可以用来实现流量监控，在高流量的情况下，对服务进行降级。
 + API接口从内部服务剥离出来，方便做测试。
 
-### Hystrix的设计原则
+### Zuul的工作原理
+Zuul是通过Servlet来实现的，Zuul通过自定义的ZuulServlet（类似于Spring MVC的DispatchServlet）来对请求进行控制。Zuul的核心是一些列过滤器，可以在Http请求的发起和响应返回期间执行一系列的过滤器。Zuul包括以下4种过滤器：
++ PRE过滤器：它是在请求路由到具体的服务之前执行的，这种类型的过滤器可以做安全验证，例如身份验证、参数验证等。
++ ROUTING过滤器：它用于将请求路由到具体的微服务实例。在默认情况下，它使用Http Client进行网络请求。
++ POST过滤器：它是请求已被路由到具体微服务后执行的。一般情况下，用作收集统计信息、指标，以及响应传输到客户端。
++ ERROR过滤器：它是在其他过滤器发生错误时执行的。
+
+Zuul采取了动态读取、编译和运行这些过滤器。过滤器直接不能直接相互通信，而是通过RequestContext对象来共享数据，每个请求都会创建要给RequestContext对象。Zuul过滤器具有以下关键特性：
++ Type（类型）：Zuul过滤器的类型，这个类型决定了过滤器在请求的哪个阶段起作用，例如Pre、Post阶段等。
++ Execution Order（执行顺序）：规定了过滤器的执行顺序，Order的值越小，越先执行。
++ Criteria（标准）：过滤器执行所需的条件。
++ Action（行动）：如果符合执行条件，则执行Action（即逻辑代码）。
+
+Zuul请求的生命周期：当一个客户端Request请求进入Zuul网关服务时，网关先进入“pre filter”，进行一系列验证、操作或者判断。然后交给“routing filter”进行路由转发，转发到具体的服务实例进行逻辑处理、返回数据。当具体的服务处理完后，最后由“post filter”进行处理，该类型的过滤器处理完后将Response信息返回给客户端。
+
+ZuulServlet是Zuul的核心Servlet，它的作用是初始化ZuulFilter，并编排这些ZuulFilter的执行顺序，它有一个service()方法，定义了过滤器执行的逻辑，其代码如下：
+```
+  public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
+        try {
+            this.init((HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse);
+            RequestContext context = RequestContext.getCurrentContext();
+            context.setZuulEngineRan();
+
+            try {
+                this.preRoute();
+            } catch (ZuulException var12) {
+                this.error(var12);
+                this.postRoute();
+                return;
+            }
+
+            try {
+                this.route();
+            } catch (ZuulException var13) {
+                this.error(var13);
+                this.postRoute();
+                return;
+            }
+
+            try {
+                this.postRoute();
+            } catch (ZuulException var11) {
+                this.error(var11);
+            }
+        } catch (Throwable var14) {
+            this.error(new ZuulException(var14, 500, "UNHANDLED_EXCEPTION_" + var14.getClass().getName()));
+        } finally {
+            RequestContext.getCurrentContext().unset();
+        }
+    }
+```
+
+### 搭建Zuul服务
+1、在eureka-zuul-client添加Zuul的起步依赖```spring-cloud-starter-netflix-zuul```，在启动类添加@EnableZuulProxy注解开启Zuul功能。
+
+2、在配置文件配置Zuul路由。如下：
+```
+zuul:
+  routes:
+    hiapi:
+      path: /hiapi/**
+      serviceId: eureka-client
+#      url: http://localhost:8762  #这样写不会做负载均衡
+#      serviceId: hiapi-v1
+    ribbonapi:
+      path: /ribbonapi/**
+      serviceId: eureka-ribbon-client
+    feignapi:
+      path: /feignapi/**
+      serviceId: eureka-feign-client
+```
+其中，zuul.routes.hiapi.path为“ /hiapi/** ”，zuul.routes.hiapi.serviceId为“ eureka-client ”，这两个配置可以将以“ /hiapi ”开头的url路由到eureka-client服务，其中zuul.routes.hiapi的“ hiapi ”是自己定义的，需要指定它的path和serviceId，两者配合使用就可以将指定类型的请求url路由到指定的ServiceId。同理，满足以“ /ribbonapi ”开头的请求url都会被分发到eureka-ribbon-client服务，满足以“ /feignapi ”开头的请求url都会被分发到eureka-feign-client服务。如果某服务存在多个实例，Zuul结合Ribbon会做负载均衡，将请求路由到不同的服务实例。
+
+3、依次启动eureka-server、eureka-client、eureka-ribbon-client、eureka-feign-client、eureka-zuul-client，其中eureka-client启动两个实例，端口分别为8902、8903，eureka-zuul-client端口为5000，在浏览器多次访问http://localhost:5000/hiapi/hi?name=cqf ，交替显示：
+```
+hi cqf,i am from port:8902
+hi cqf,i am from port:8903
+```
+可见Zuul在路由转发做了负载均衡。同理多次访问http://localhost:5000/feignapi/hi?name=cqf 和 http://localhost:5000/ribbonapi/hi?name=cqf 可以看到一样的内容。
+
+如果不需要用Ribbon做负载均衡，可以指定服务实例的url，例如：
+```
+zuul:
+  routes:
+    hiapi:
+      path: /hiapi/**
+      url: http://localhost:8902  #这样写不会做负载均衡
+```
+如果想指定url，并且想做负载均衡，那么需要自己维护负载均衡的服务注册列表，例如：
+```
+zuul:
+  routes:
+    hiapi:
+      path: /hiapi/**
+      serviceId: eureka-client
+      serviceId: hiapi-v1
+  
+ribbon:
+  eureka:
+    enabled: false
+
+hiapi-v1:
+  ribbon:
+    listOfServers: http://localhost:8762,http://localhost:8763
+```
+以上配置，将ribbon.eureka.enabled改为false（即Ribbon负载均衡客户端不向Eureka Client获取服务注册列表信息），同时自己维护一份注册列表信息，该注册列表对应的服务名为hiapi-v1（这个名字可以自动有），通过hiapi-v1.ribbon.listOfServers来配置多个负载均衡的url。
+
+
+
 总的来说，Hystrix的设计原则如下：
 + 防止单个服务的故障耗尽整个服务的Servlet容器（例如Tomcat）的线程资源。
 + 快速失败机制，如果某个服务出现了故障，则调用该服务的请求快速失败，而不是线程等待。
