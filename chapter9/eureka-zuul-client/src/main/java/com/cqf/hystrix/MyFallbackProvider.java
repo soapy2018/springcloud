@@ -18,8 +18,8 @@ import java.io.InputStream;
 class MyFallbackProvider  implements FallbackProvider {  //Zuul实现熔断功能需要实现此接口
     @Override
     public String getRoute() {  //指定熔断功能应用于哪些路由的服务
-//        return "eureka-client";
-        return "*"; //所有服务都加熔断功能
+        return "eureka-client";
+        //return "*"; //所有服务都加熔断功能
     }
 
     @Override

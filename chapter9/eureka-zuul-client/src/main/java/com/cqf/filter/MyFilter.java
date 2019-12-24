@@ -2,6 +2,7 @@ package com.cqf.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import com.netflix.zuul.http.ZuulServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -40,11 +41,11 @@ public class MyFilter extends ZuulFilter {
         Object accessToken = request.getParameter("token");
         if(accessToken == null) {
             log.warn("token is empty");
-//            ctx.setSendZuulResponse(false);
-////            ctx.setResponseStatusCode(401);
-////            try {
-////                ctx.getResponse().getWriter().write("token is empty");
-////            }catch (Exception e){}
+            ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(401);
+            try {
+                ctx.getResponse().getWriter().write("token is empty");
+            }catch (Exception e){}
 
             return null;
         }
