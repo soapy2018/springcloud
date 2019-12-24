@@ -62,6 +62,13 @@ ZuulServlet是Zuul的核心Servlet，它的作用是初始化ZuulFilter，并编
     }
 ```
 
+### Zuul的常见使用方式
+Zuul采用了类似于Spring MVC的DispatchServlet来实现，采用的是异步阻塞模型，所以性能比Nginx差。由于Zuul和其他Netflix组件可以相互配合、无缝集成，Zuul很容易就能实现负载均衡、智能路由和熔断器等功能。在大多数情况下，Zuul都是以集群的形式存在的。由于Zuul的横向扩展能力非常好，所以当负载过高时，可以通过添加实例来解决性瓶颈。
+
+一种常见的使用方式是对不同的渠道使用不同的Zuul来进行路由，例如移动端共用一个Zuul网关实例，Web端用另一个Zuul网关实例，其他客户端用另外一个Zuul实例。
+
+另外一种常见的集群是通过Nginx和Zuul互相结合来做负载均衡。暴露在最外面的是Nginx主从双热备进行Keepalive，Nginx经过某种路由策略，将请求路由转发到Zuul集群上，Zuul最终将请求分发到具体的服务上。
+
 ### 搭建Zuul服务
 1、在eureka-zuul-client添加Zuul的起步依赖```spring-cloud-starter-netflix-zuul```，在启动类添加@EnableZuulProxy注解开启Zuul功能。
 
