@@ -1,4 +1,4 @@
-## Chapter 9 路由网关Spring Cloud Zuul
+## Chapter 10 配置中心Spring Cloud Config
 ====================================================================
 
 ### 为什么需要Zuul
