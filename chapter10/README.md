@@ -148,5 +148,17 @@ management:
       exposure:
         include: bus-refresh
 ```
-
+Git配置文件如下：
+```
+foo: foo version 108
+```
+依次启动eureka-server，启动两个config-server实例（两个实例都配置成从远程Git仓库获取），端口分别为8102、8103，启动两个config-client实例，端口分别为8104、8105（端口在config-client指定，不从Git仓库获取）。启动完成后，在浏览器上访问 http://localhost:8104/foo 或 http://localhost:8105/foo ，浏览器显示：
+```
+foo version 108
+```
+更改Git仓库配置文件成：
+```
+foo: foo version 888
+```
+通过Postman或者其他工具发送一个post请求http://localhost:8104/actuator/bus-refresh ，请求刷新配置，由于使用了Spring Cloud Bus，其他服务实例（案例中是8105端口的服务实例）会接收到刷新配置的消息，从而刷新配置。另外“ /actuator/bus/refresh ”API接口也可以指定服务，即使用“ destination ”参数，例如“ /actuator/bus/refresh?destination=config-client:** ”，即刷新服务名为config-client的所有服务实例。
 
