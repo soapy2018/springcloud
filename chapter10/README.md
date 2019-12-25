@@ -1,7 +1,42 @@
 ## Chapter 10 配置中心Spring Cloud Config
 ====================================================================
+本章主要讲述Spring Cloud的组件——分布式配置中心Spring Cloud Config，分为以下四个方面：
++ Config Server从本地读取配置文件。
++ Config Server从远程Git仓库读取配置文件。
++ 搭建高可用Config Server集群。
++ 使用Spring Cloud Bus刷新配置。
 
-### 为什么需要Zuul
+### Config Server从本地读取配置文件
+Config Server可以从本地仓库读取配置文件，也可以从远程Git仓库读取。本地仓库是指将所有的配置文件统一写在Config Server工程目录下。Config Server暴露Http API接口，Config Client通过调用Config Server的Http API接口来读取配置文件。
+
+1、config-server工程添加起步依赖```spring-cloud-config-server```，注意这里不需要```spring-cloud-starter-netflix-eureka-client```依赖。
+
+2、在程序的启动类添加@EnableConfigServer注解开启Config Server功能，注意这里不需要@EnableEurekaClient注解。
+
+3、config-server工程配置文件，通过spring.profiles.active=native来配置Config Server从本地读取配置，读取配置的路径为classpath下的shared目录。配置如下：
+```
+server:
+  port: 8101
+# native 从本地读取配置文件
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+  profiles:
+    active: native
+```
+4、在工程的Resources目录下建一个shares文件夹，用于存放本地配置文件。在shared目录下，新建一个config-client-dev.yml文件，用作eureka-client工程的dev（开发环境）的配置文件。在config-client-dev.yml配置文件中，指定程序的端口号为8109，并定义一个值为foo version 1的变量foo。如下：
+```
+server:
+  port: 8109
+
+foo: foo version 1
+```
+
 Zuul作为路由网关组件，在微服务架构中有着非常重要的作用，主要体现在以下6个方面：
 + Zuul、Ribbon以及Eureka相结合，可以实现智能路由和负载均衡的功能，Zuul能够将请求流量按某种策略分发到集群部署的多个服务实例。
 + 网关将所有服务的API接口统一聚合，并统一对外暴露，屏蔽了内部各服务之间复杂的相互调用。同时，这样做也保护了内部微服务单元的API接口，防止其被外界直接调用，导致服务的敏感信息对外暴露。
