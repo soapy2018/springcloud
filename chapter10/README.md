@@ -126,4 +126,27 @@ eureka:
 ### 使用Spring Cloud Bus刷新配置
 Spring Cloud Bus是用轻量的消息代理将分布式的节点连接起来，可以用于广播配置文件的更改或者服务的监控管理。一个关键的思想是，消息总线可以为微服务做监控，也可以实现应用程序之间相互通信。Spring Cloud Bus可选的消息代理组件包括RabbitMQ、AMQP和Kafka等。本案例使用RabbitMQ作为Spring Cloud的消息组件去刷新更改微服务的配置文件。
 
+为什么需要用Spring Cloud Bus去刷新配置呢？
+
+如果有几十个微服务，而每一个服务又是多实例，当更改配置时，需要重新启动多个微服务实例，会非常麻烦。Spring Cloud Bus的一个功能就是让这个过程变得简单，当远程Git仓库的配置更改后，只需要向某个微服务实例发送一个Post请求，通过消息组件通知其他微服务实例重新拉取配置文件。
+
+改造config-client工程：1、添加用RabbitMQ实现的Spring Cloud Bus的起步依赖```spring-cloud-starter-bus-amqp```和```spring-boot-starter-actuator```，并在程序启动类添加注解@RefreshScope，只有加上了该注解，才会在不重启服务的情况下更新配置。2、配置文件添加RabbitMQ相关配置，其中host为RabbitMQ服务器的IP地址，port为RabbitMQ服务器的端口，username和password为RabbitMQ服务器的用户名和密码，配置如下：
+```
+#消息组件RabbitMQ配置
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirms: true
+    virtual-host: /
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
+```
+
 
