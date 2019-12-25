@@ -130,7 +130,7 @@ Spring Cloud Bus是用轻量的消息代理将分布式的节点连接起来，�
 
 如果有几十个微服务，而每一个服务又是多实例，当更改配置时，需要重新启动多个微服务实例，会非常麻烦。Spring Cloud Bus的一个功能就是让这个过程变得简单，当远程Git仓库的配置更改后，只需要向某个微服务实例发送一个Post请求，通过消息组件通知其他微服务实例重新拉取配置文件。
 
-改造config-client工程：1、添加用RabbitMQ实现的Spring Cloud Bus的起步依赖```spring-cloud-starter-bus-amqp```和```spring-boot-starter-actuator```，并在程序启动类添加注解@RefreshScope，只有加上了该注解，才会在不重启服务的情况下更新配置。2、配置文件添加RabbitMQ相关配置，其中host为RabbitMQ服务器的IP地址，port为RabbitMQ服务器的端口，username和password为RabbitMQ服务器的用户名和密码，配置如下：
+改造config-client工程：1、添加用RabbitMQ实现的Spring Cloud Bus的起步依赖```spring-cloud-starter-bus-amqp```和```spring-boot-starter-actuator```，并在程序启动类添加注解@RefreshScope，只有加上了该注解，才会在不重启服务的情况下更新配置。2、配置文件添加RabbitMQ相关配置，其中host为RabbitMQ服务器的IP地址，port为RabbitMQ服务器的端口，username和password为RabbitMQ服务器的用户名和密码，同时需要暴露端点bus-refresh，配置如下：
 ```
 #消息组件RabbitMQ配置
 spring:
@@ -160,5 +160,9 @@ foo version 108
 ```
 foo: foo version 888
 ```
-通过Postman或者其他工具发送一个post请求http://localhost:8104/actuator/bus-refresh ，请求刷新配置，由于使用了Spring Cloud Bus，其他服务实例（案例中是8105端口的服务实例）会接收到刷新配置的消息，从而刷新配置。另外“ /actuator/bus/refresh ”API接口也可以指定服务，即使用“ destination ”参数，例如“ /actuator/bus/refresh?destination=config-client:** ”，即刷新服务名为config-client的所有服务实例。
+通过Postman或者其他工具发送一个post请求http://localhost:8104/actuator/bus-refresh （或者服务的另一个8105端口的实例），请求发送成功，再访问http://localhost:8104/foo 或 http://localhost:8105/foo ，浏览器显示：
+```
+foo version 888
+```
+可见通过Postman或者其他工具发送一个post请求刷新配置，由于使用了Spring Cloud Bus，其他服务实例（案例中是8105端口的服务实例）会接收到刷新配置的消息，从而刷新配置。另外“ /actuator/bus/refresh ”API接口也可以指定服务，即使用“ destination ”参数，例如“ /actuator/bus/refresh?destination=config-client:** ”，即刷新服务名为config-client的所有服务实例。
 
