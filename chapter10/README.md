@@ -1,5 +1,6 @@
 ## Chapter 10 配置中心Spring Cloud Config
 ====================================================================
+
 本章主要讲述Spring Cloud的组件——分布式配置中心Spring Cloud Config，分为以下四个方面：
 + Config Server从本地读取配置文件。
 + Config Server从远程Git仓库读取配置文件。
@@ -29,13 +30,56 @@ spring:
   profiles:
     active: native
 ```
-4、在工程的Resources目录下建一个shares文件夹，用于存放本地配置文件。在shared目录下，新建一个config-client-dev.yml文件，用作eureka-client工程的dev（开发环境）的配置文件。在config-client-dev.yml配置文件中，指定程序的端口号为8109，并定义一个值为foo version 1的变量foo。如下：
+4、在config-server工程的Resources目录下建一个shares文件夹，用于存放本地配置文件。在shared目录下，新建一个config-client-dev.yml文件，用作eureka-client工程的dev（开发环境）的配置文件。在config-client-dev.yml配置文件中，指定程序的端口号为8109，并定义一个值为foo version 1的变量foo。如下：
 ```
 server:
   port: 8109
-
+  
 foo: foo version 1
 ```
+5、在config-client工程引入依赖```spring-cloud-starter-config```和```spring-boot-starter-web```，并添加注解@RestController开启web功能。
+
+6、在配置文件bootstrap.yml中做程序的配置（注意bootstrap相对于application具有优先的执行顺序）。bootstrap.yml指定了程序名为config-client，向Url地址为 http://localhost:8101 的Config Server读取配置文件，如果没有读取成功，则执行快速失败（fail-fast）。变量spring.applicatition.name和变量spring.profiles.active，两者以“ - ”相连，构成了向Config Server读取的配置文件名，所以config-client在配置中心读取的配置文件名为config-client-dev.yml文件。配置如下：
+```
+#从Config Server获取配置文件
+spring:
+  application:
+    name: config-client
+  profiles:
+    active: dev
+  cloud:
+    config:
+     uri: http://localhost:8101
+     fail-fast: true
+```
+
+7、启动config-server、config-client工程，config-server端口为8101，发现config-client的端口为8109，访问http://localhost:8109/foo ，显示：
+```
+foo version 1
+```
+
+### Config Server从远程Git仓库读取配置文件
+1、修改Config Server的配置文件如下：
+```
+# remote git 从远程git仓库读取配置文件
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/soapy2018/SpringCloudConfig
+          searchPaths: respo
+          username:
+          password:
+      label: master
+```
+其中，uri为远程Git仓库地址，searchPaths为搜索远程仓库的文件夹地址，username和password为Git仓库的登录名和密码。如果是私人仓库需要登录名和密码，如果是公开仓库则可以不填。label为Git仓库的分支名，本例从master读取。
+
+2、将文件config-client-dev.yml上传到我自己新建的仓库https://github.com/soapy2018/SpringCloudConfig
+
+
 
 Zuul作为路由网关组件，在微服务架构中有着非常重要的作用，主要体现在以下6个方面：
 + Zuul、Ribbon以及Eureka相结合，可以实现智能路由和负载均衡的功能，Zuul能够将请求流量按某种策略分发到集群部署的多个服务实例。
