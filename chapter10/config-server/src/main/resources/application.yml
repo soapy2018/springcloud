@@ -1,0 +1,35 @@
+
+server:
+  port: 8101
+# native 从本地读取配置文件
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+  profiles:
+    active: native
+
+
+# remote git 从远程git仓库读取配置文件
+#spring:
+#  application:
+#    name: config-server
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://github.com/soapy2018/SpringCloudConfig
+#          searchPaths: respo
+#          username:
+#          password:
+#      label: master
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+

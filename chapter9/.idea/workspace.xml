@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0df57a7d-a397-4a28-a54c-81cd87cf4ad2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/eureka-zuul-client/src/main/java/com/cqf/filter/MyFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-zuul-client/src/main/java/com/cqf/filter/MyFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-zuul-client/src/main/java/com/cqf/hystrix/MyFallbackProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-zuul-client/src/main/java/com/cqf/hystrix/MyFallbackProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-zuul-client/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-zuul-client/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/eureka-ribbon-client/target/" />
@@ -31,7 +29,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/eureka-zuul-client/src/main/java/com/cqf/filter/MyFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
+            <state relative-caret-position="366">
               <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -614,12 +612,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1577087180027</updated>
-      <workItem from="1577087182816" duration="10397000" />
+      <workItem from="1577087182816" duration="10593000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10397000" />
+    <option name="totallyTimeSpent" value="10593000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
@@ -643,7 +641,7 @@
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3285968" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -802,7 +800,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/eureka-zuul-client/src/main/java/com/cqf/filter/MyFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
+        <state relative-caret-position="366">
           <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
