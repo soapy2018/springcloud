@@ -2,4 +2,4 @@
 server:
   port: 8109
 
-foo: foo version 1
+foo: foo version 2

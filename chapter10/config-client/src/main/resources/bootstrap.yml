@@ -1,46 +1,49 @@
+#Config Server单实例不作为eureka client时，从Config Server获取配置文件
+#spring:
+#  application:
+#    name: config-client
+#  profiles:
+#    active: dev
+#  cloud:
+#    config:
+#     uri: http://localhost:8102
+#     fail-fast: true
 
+#Config Server作为eureka client集群部署时，从Config Server获取配置文件
 spring:
   application:
     name: config-client
   profiles:
     active: dev
-
   cloud:
     config:
-     uri: http://localhost:8101
-     fail-fast: true
+      fail-fast: true
+      discovery:
+        enabled: true
+        serviceId: config-server
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8101/eureka/
 
-#    cloud:
-#      config:
-#        uri: http://localhost:8101
-#          fail-fast: true
-#          discovery:
-#            enabled: true
-#            serviceId: config-server
-#
-#    profiles:
-#      active: dev
+#消息组件RabbitMQ配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirms: true
+    virtual-host: /
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
 
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
-#    password: guest
-#    publisher-confirms: true
-#    virtual-host: /
-#
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8761/eureka/
-#
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: bus-refresh
+server:
+  port: 8105
 
 #spring.application.name=config-client
 #spring.cloud.config.label=master
