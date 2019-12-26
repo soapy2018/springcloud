@@ -45,9 +45,6 @@ Zipkin是一种分布式链路追踪系统。 它有助于收集解决微服务�
 + RESTful API：API 组件，它主要用来提供外部访问接口。比如给客户端展示跟踪信息，或是外接系统访问以实现监控等。
 + Web UI：UI 组件，基于 API 组件实现的上层应用。通过 UI 组件用户可以方便而有直观地查询和分析跟踪信息。
 
-### 案例实战
-本案例包含注册中心eureka-server、服务提供者user-server、网关服务gateway-server。
-
 #### zipkin-server
 在Spring Cloud D版本，zipkin-server通过引入依赖的方式构建工程，自从E版本之后，这一方式改变了，采用官方的jar形式启动，所以需要通过下载官方的jar来启动，也通过以下命令一键启动：
 ```
@@ -63,5 +60,104 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 通过java -jar zipkin.jar的方式启动之后，在浏览器上访问lcoalhost:9411即可。
 
 #### 使用Http传输链路数据
+本案例包含注册中心eureka-server、服务提供者user-server、网关服务gateway-server。
+
+1、服务提供者user-service添加Eureka、Web、Zipkin依赖如下：
+```
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
+	</dependencies>
+```
+在配置文件中配置如下：
+```
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8111/eureka/
+server:
+  port: 8112
+spring:
+  application:
+    name: user-service
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    base-url: http://localhost:9411
+```
+其中spring.sleuth.sampler.probability可以设置为小数，最大值为1.0，当设置为1.0时就是链路数据100%收集到zipkin-server，当设置为0.1时，即10%概率收集链路数据；spring.zipkin.base-url设置zipkin-server的地址。
+
+服务提供者提供一个“ /user/hi ”的API接口，对外提供服务，并在程序启动类开启Eureka Client功能。
+
+2、网关服务gateway-service添加Eureka、Zuul、Web、Zipkin依赖如下：
+```
+<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
+```
+在配置文件中配置如下：
+```
+server:
+  port: 5000
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8111/eureka/
+
+spring:
+  application:
+    name: gateway-service
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    base-url: http://localhost:9411
+
+zuul:
+  routes:
+    api-a:
+      path: /user-api/**
+      serviceId: user-service
+```
+并在程序启动类开启Eureka Client和Zuul代理功能。
+
+3、依次启动zipkin-server（通过命令java -jar zipkin.jar）、user-service、gateway-service，浏览器访问http://localhost:5000/user-api/user/hi ，返回：
+```
+I'm cqf
+```
+访问http://localhost:9411/ ，即访问Zipkin的展示界面，如图：
+![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image7.png)
+
+点击“Find Tracks”按钮，显示请求的调用情况，如请求的调用时间、消耗时间以及链路情况。如图：
+![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image8.png)
+
+点击“Dependences”按钮，可以查看服务的依赖关系，本例中gateway-service将请求转发到了user-service。如图：
+![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image9.png)
 
 
