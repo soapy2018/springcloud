@@ -44,3 +44,24 @@ Zipkin是一种分布式链路追踪系统。 它有助于收集解决微服务�
 + Storage：存储组件，它主要对处理收集器接收到的跟踪信息，默认会将这些信息存储在内存中，我们也可以修改此存储策略，通过使用其他存储组件将跟踪信息存储到数据库中。
 + RESTful API：API 组件，它主要用来提供外部访问接口。比如给客户端展示跟踪信息，或是外接系统访问以实现监控等。
 + Web UI：UI 组件，基于 API 组件实现的上层应用。通过 UI 组件用户可以方便而有直观地查询和分析跟踪信息。
+
+### 案例实战
+本案例包含注册中心eureka-server、服务提供者user-server、网关服务gateway-server。
+
+#### zipkin-server
+在Spring Cloud D版本，zipkin-server通过引入依赖的方式构建工程，自从E版本之后，这一方式改变了，采用官方的jar形式启动，所以需要通过下载官方的jar来启动，也通过以下命令一键启动：
+```
+curl -sSL https://zipkin.io/quickstart.sh | bash -s
+java -jar zipkin.jar
+```
+上面的第一行命令会从zipkin官网下载官方的jar包。 如果是window系统，建议使用gitbash执行上面的命令。
+
+如果用 Docker 的话，使用以下命令：
+```
+docker run -d -p 9411:9411 openzipkin/zipkin
+```
+通过java -jar zipkin.jar的方式启动之后，在浏览器上访问lcoalhost:9411即可。
+
+#### 使用Http传输链路数据
+
+
