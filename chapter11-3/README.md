@@ -62,7 +62,7 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 #### 使用Http传输链路数据
 本案例包含注册中心eureka-server、服务提供者user-server、网关服务gateway-server。
 
-1、服务提供者user-service添加Eureka、Web、Zipkin依赖如下：
+1、服务提供者user-service添加Eureka、Web、sleuth（这个依赖不加貌似也可以）、Zipkin依赖如下：
 ```
 	<dependencies>
 		<dependency>
@@ -72,6 +72,10 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -100,7 +104,7 @@ spring:
 
 服务提供者提供一个“ /user/hi ”的API接口，对外提供服务，并在程序启动类开启Eureka Client功能。
 
-2、网关服务gateway-service添加Eureka、Zuul、Web、Zipkin依赖如下：
+2、网关服务gateway-service添加Eureka、Zuul、Web、sleuth（这个依赖不加貌似也可以）、Zipkin依赖如下：
 ```
 <dependencies>
 		<dependency>
@@ -114,6 +118,10 @@ spring:
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -161,9 +169,37 @@ I'm cqf
 ![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image9.png)
 
 ### 使用rabbitmq进行链路数据收集
-在上面的案例中使用的http请求的方式将链路数据发送给zipkin-server，其实还可以使用rabbitmq的方式进行服务的消费。使用rabbitmq需要安装rabbitmq程序，下载地址http://www.rabbitmq.com/。
+在上面的案例中使用的http请求的方式将链路数据发送给zipkin-server，其实还可以使用rabbitmq的方式进行服务的消费。使用rabbitmq需要安装rabbitmq程序，下载地址http://www.rabbitmq.com/ 。
 
-下载完成后，在工程user-service和gateway-service需要添加rabbitmq的起步依赖```spring-cloud-stream-binder-rabbit```。
+属性     | 环境变量 |  描述  |
+-------- | ----- | ------ |
+zipkin.collector.rabbitmq.addresses  | RABBIT_ADDRESSES  | 用逗号分隔的 RabbitMQ 地址列表，例如localhost:5672,localhost:5673  |
+zipkin.collector.rabbitmq.password  | RABBIT_PASSWORD  | 连接到 RabbitMQ 时使用的密码，默认为 guest  |
+zipkin.collector.rabbitmq.username  | RABBIT_USER  | 连接到 RabbitMQ 时使用的用户名，默认为guest  |
+zipkin.collector.rabbitmq.virtual-host  | RABBIT_VIRTUAL_HOST  | 使用的 RabbitMQ virtual host，默认为 /  |
+zipkin.collector.rabbitmq.use-ssl  | RABBIT_USE_SSL  | 设置为true则用 SSL 的方式与 RabbitMQ 建立链接  |
+zipkin.collector.rabbitmq.concurrency  | RABBIT_CONCURRENCY  | 并发消费者数量，默认为1  |
+zipkin.collector.rabbitmq.connection-timeout  | RABBIT_CONNECTION_TIMEOUT  | 建立连接时的超时时间，默认为 60000毫秒，即 1 分钟  |
+zipkin.collector.rabbitmq.queue  | RABBIT_QUEUE  | 从中获取 span 信息的队列，默认为 zipkin  |
 
+1、Zipkin集成RabbitMQ：根据官方给的方式，我们可以使用 java -jar zipkin.jar 的方式启动 Zipkin Server，在使用这个命令的时候，我们是可以设置一些参数的，这里我们可以通过设置环境变量让 Zipkin 从 RabbitMQ 中获取到跟踪信息，比如，通过以下命令启动：
+```
+RABBIT_ADDRESSES=localhost java -jar zipkin.jar
+```
+上面的命令等同于一下的命令：
+```
+java -jar zipkin.jar --zipkin.collector.rabbitmq.addressed=localhost
+```
+此时访问RabbitMQ的管理界面http://localhost:15672/ ，在Queues可以看到已经创建了一个zipkin的队列（测试发现删除这个队列就关联不上了，只有重启系统才有用，why？浪费了我一晚上查原因），说明ZipServer 集成RabbitMQ成功了。界面如下：
+![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image10.png)
+当然，访问http://localhost:9411/ ，也能看到Zipkin的管理界面。
+
+2、在工程user-service和gateway-service添加rabbitmq的起步依赖```spring-cloud-stream-binder-rabbit```，并将配置文件的如下配置注释：
+```
+#    zipkin:
+#      base-url: http://localhost:9411
+```
+
+3、这样就配置好了，重启user-service和gateway-service，访问http://localhost:9411/ 就能看到链路相关信息了。
 
 
