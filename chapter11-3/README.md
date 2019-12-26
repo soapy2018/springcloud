@@ -160,4 +160,10 @@ I'm cqf
 点击“Dependences”按钮，可以查看服务的依赖关系，本例中gateway-service将请求转发到了user-service。如图：
 ![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image9.png)
 
+### 使用rabbitmq进行链路数据收集
+在上面的案例中使用的http请求的方式将链路数据发送给zipkin-server，其实还可以使用rabbitmq的方式进行服务的消费。使用rabbitmq需要安装rabbitmq程序，下载地址http://www.rabbitmq.com/。
+
+下载完成后，在工程user-service和gateway-service需要添加rabbitmq的起步依赖```spring-cloud-stream-binder-rabbit```。
+
+
 
