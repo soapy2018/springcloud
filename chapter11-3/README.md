@@ -1,168 +1,19 @@
-## Chapter 10 配置中心Spring Cloud Config
+## Chapter 11 服务链路追踪 Spring Cloud Sleuth
 ====================================================================
 
-本章主要讲述Spring Cloud的组件——分布式配置中心Spring Cloud Config，分为以下四个方面：
-+ Config Server从本地读取配置文件。
-+ Config Server从远程Git仓库读取配置文件。
-+ 构建高可用Config Server集群。
-+ 使用Spring Cloud Bus刷新配置。
+随着业务发展，系统拆分导致系统调用链路愈发复杂一个前端请求可能最终需要调用很多次后端服务才能完成，当整个请求变慢或不可用时，我们是无法得知该请求是由某个或某些后端服务引起的，这时就需要解决如何快读定位服务故障点，以对症下药。于是就有了分布式系统调用跟踪的诞生。
 
-### Config Server从本地读取配置文件
-Config Server可以从本地仓库读取配置文件，也可以从远程Git仓库读取。本地仓库是指将所有的配置文件统一写在Config Server工程目录下。Config Server暴露Http API接口，Config Client通过调用Config Server的Http API接口来读取配置文件。
+现今业界分布式服务跟踪的理论基础主要来自于 Google 的一篇论文《Dapper, a Large-Scale Distributed Systems Tracing Infrastructure》，使用最为广泛的开源实现是 Twitter 的 Zipkin，为了实现平台无关、厂商无关的分布式服务跟踪，CNCF 发布了布式服务跟踪标准 Open Tracing。国内，淘宝的“Eagleeye”（鹰眼）、京东的“Hydra”、大众点评的“CAT”、新浪的“Watchman”、唯品会的“Microscope”、窝窝网的“Tracing”都是这样的系统。
 
-1、config-server工程添加起步依赖```spring-cloud-config-server```，注意这里不需要```spring-cloud-starter-netflix-eureka-client```依赖。
+### Spring Cloud Sleuth
+一般的，一个分布式服务跟踪系统，主要有三部分：数据收集、数据存储和数据展示。根据系统大小不同，每一部分的结构又有一定变化。譬如，对于大规模分布式系统，数据存储可分为实时数据和全量数据两部分，实时数据用于故障排查（troubleshooting），全量数据用于系统优化；数据收集除了支持平台无关和开发语言无关系统的数据收集，还包括异步数据收集（需要跟踪队列中的消息，保证调用的连贯性），以及确保更小的侵入性；数据展示又涉及到数据挖掘和分析。虽然每一部分都可能变得很复杂，但基本原理都类似。
 
-2、在程序的启动类添加@EnableConfigServer注解开启Config Server功能，注意这里不需要@EnableEurekaClient注解。
+服务追踪的追踪单元是从客户发起请求（request）抵达被追踪系统的边界开始，到被追踪系统向客户返回响应（response）为止的过程，称为一个“trace”。每个 trace 中会调用若干个服务，为了记录调用了哪些服务，以及每次调用的消耗时间等信息，在每次调用服务时，埋入一个调用记录，称为一个“span”。这样，若干个有序的 span 就组成了一个 trace。在系统向外界提供服务的过程中，会不断地有请求和响应发生，也就会不断生成 trace，把这些带有span 的 trace 记录下来，就可以描绘出一幅系统的服务拓扑图。附带上 span 中的响应时间，以及请求成功与否等信息，就可以在发生问题的时候，找到异常的服务；根据历史数据，还可以从系统整体层面分析出哪里性能差，定位性能优化的目标。
 
-3、config-server工程配置文件，通过spring.profiles.active=native来配置Config Server从本地读取配置，读取配置的路径为classpath下的shared目录。配置如下：
-```
-server:
-  port: 8102
-# native 从本地读取配置文件
-spring:
-  application:
-    name: config-server
-  cloud:
-    config:
-      server:
-        native:
-          search-locations: classpath:/shared
-  profiles:
-    active: native
-```
-4、在config-server工程的Resources目录下建一个shares文件夹，用于存放本地配置文件。在shared目录下，新建一个config-client-dev.yml文件，用作eureka-client工程的dev（开发环境）的配置文件。在config-client-dev.yml配置文件中，指定程序的端口号为8109，并定义一个值为foo version 1的变量foo。如下：
-```
-server:
-  port: 8109
-  
-foo: foo version 1
-```
-5、在config-client工程引入依赖```spring-cloud-starter-config```和```spring-boot-starter-web```，并添加注解@RestController开启web功能。
+Spring Cloud Sleuth为服务之间调用提供链路追踪。通过Sleuth可以很清楚的了解到一个服务请求经过了哪些服务，每个服务处理花费了多长。从而让我们可以很方便的理清各微服务间的调用关系。此外Sleuth可以帮助我们：
++ 耗时分析: 通过Sleuth可以很方便的了解到每个采样请求的耗时，从而分析出哪些服务调用比较耗时;
++ 可视化错误: 对于程序未捕捉的异常，可以通过集成Zipkin服务界面上看到;
++ 链路优化: 对于调用比较频繁的服务，可以针对这些服务实施一些优化措施。
++ spring cloud sleuth可以结合zipkin，将信息发送到zipkin，利用zipkin的存储来存储信息，利用zipkin ui来展示数据。
 
-6、在配置文件bootstrap.yml中做程序的配置（注意bootstrap相对于application具有优先的执行顺序）。bootstrap.yml指定了程序名为config-client，向Url地址为 http://localhost:8101 的Config Server读取配置文件，如果没有读取成功，则执行快速失败（fail-fast）。变量spring.applicatition.name和变量spring.profiles.active，两者以“ - ”相连，构成了向Config Server读取的配置文件名，所以config-client在配置中心读取的配置文件名为config-client-dev.yml文件。配置如下：
-```
-#从Config Server获取配置文件
-spring:
-  application:
-    name: config-client
-  profiles:
-    active: dev
-  cloud:
-    config:
-     uri: http://localhost:8102
-     fail-fast: true
-```
-
-7、启动config-server、config-client工程，config-server端口为8101，发现config-client的端口为8109，访问http://localhost:8109/foo ，显示：
-```
-foo version 1
-```
-
-### Config Server从远程Git仓库读取配置文件
-1、修改Config Server的配置文件如下：
-```
-# remote git 从远程git仓库读取配置文件
-spring:
-  application:
-    name: config-server
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/soapy2018/SpringCloudConfig
-          searchPaths: respo
-          username:
-          password:
-      label: master
-```
-其中，uri为远程Git仓库地址，searchPaths为搜索远程仓库的文件夹地址，username和password为Git仓库的登录名和密码。如果是私人仓库需要登录名和密码，如果是公开仓库则可以不填。label为Git仓库的分支名，本例从master读取。
-
-2、将配置文件config-client-dev.yml上传到我自己新建的仓库 https://github.com/soapy2018/SpringCloudConfig 的respo文件夹下。配置文件内容如下：
-```
-server:
-  port: 8108
-
-foo: foo version 108
-```
-3、重新启动config-server、config-client工程，发现config-client的端口为8108，访问http://localhost:8109/foo ，显示：
-```
-foo version 108
-```
-
-### 构建高可用Config Server集群
-当服务实例很多时，所有的服务实例需要同时从配置中心Config Server读取配置文件，这时可以考虑将配置中心Config Server做成一个微服务，并且将其集群化，从而达到高可用。本案例Config Server和Config Client向Eureka Server注册，且将Config Server多实例集群部署。
-
-1、增加一个服务注册中心eureka-server。
-
-2、改造config-server：作为Eureka Client，添加依赖```spring-cloud-starter-netflix-eureka-client```；在启动类添加注解@EnableEurekaClient；在配置文件添加服务注册地址，如下：
-```
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8102/eureka/
-```
-3、改造config-client：同样作为Eureka Client添加依赖和注解。在配置文件指定服务注册中心地址，并向serviceId为config-server的服务读取配置文件，如下：
-```
-#Config Server作为eureka client集群部署时，从Config Server获取配置文件
-spring:
-  application:
-    name: config-client
-  profiles:
-    active: dev
-  cloud:
-    config:
-      fail-fast: true
-      discovery:
-        enabled: true
-        serviceId: config-server
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8101/eureka/
-```
-
-4、启动eureka-server，启动两个config-server实例，端口分别为8102、8103，为了测试，我们可以让一个实例用本地配置，一个实例用Git仓库配置，然后多次启动eureka-client，从控制台可以发现它会轮流从 http://localhost:8102 和 http://localhost:8103 的config-server读取配置文件，并做了负载均衡。
-
-### 使用Spring Cloud Bus刷新配置
-Spring Cloud Bus是用轻量的消息代理将分布式的节点连接起来，可以用于广播配置文件的更改或者服务的监控管理。一个关键的思想是，消息总线可以为微服务做监控，也可以实现应用程序之间相互通信。Spring Cloud Bus可选的消息代理组件包括RabbitMQ、AMQP和Kafka等。本案例使用RabbitMQ作为Spring Cloud的消息组件去刷新更改微服务的配置文件。
-
-为什么需要用Spring Cloud Bus去刷新配置呢？
-
-如果有几十个微服务，而每一个服务又是多实例，当更改配置时，需要重新启动多个微服务实例，会非常麻烦。Spring Cloud Bus的一个功能就是让这个过程变得简单，当远程Git仓库的配置更改后，只需要向某个微服务实例发送一个Post请求，通过消息组件通知其他微服务实例重新拉取配置文件。
-
-改造config-client工程：1、添加用RabbitMQ实现的Spring Cloud Bus的起步依赖```spring-cloud-starter-bus-amqp```和```spring-boot-starter-actuator```，并在程序启动类添加注解@RefreshScope，只有加上了该注解，才会在不重启服务的情况下更新配置。2、配置文件添加RabbitMQ相关配置，其中host为RabbitMQ服务器的IP地址，port为RabbitMQ服务器的端口，username和password为RabbitMQ服务器的用户名和密码，同时需要暴露端点bus-refresh，配置如下：
-```
-#消息组件RabbitMQ配置
-spring:
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-    publisher-confirms: true
-    virtual-host: /
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: bus-refresh
-```
-Git配置文件如下：
-```
-foo: foo version 108
-```
-依次启动eureka-server，启动两个config-server实例（两个实例都配置成从远程Git仓库获取），端口分别为8102、8103，启动两个config-client实例，端口分别为8104、8105（端口在config-client指定，不从Git仓库获取）。启动完成后，在浏览器上访问 http://localhost:8104/foo 或 http://localhost:8105/foo ，浏览器显示：
-```
-foo version 108
-```
-更改Git仓库配置文件成：
-```
-foo: foo version 888
-```
-通过Postman或者其他工具发送一个post请求http://localhost:8104/actuator/bus-refresh （或者服务的另一个8105端口的实例），请求发送成功，再访问http://localhost:8104/foo 或 http://localhost:8105/foo ，浏览器显示：
-```
-foo version 888
-```
-可见通过Postman或者其他工具发送一个post请求刷新配置，由于使用了Spring Cloud Bus，其他服务实例（案例中是8105端口的服务实例）会接收到刷新配置的消息，从而刷新配置。另外“ /actuator/bus/refresh ”API接口也可以指定服务，即使用“ destination ”参数，例如“ /actuator/bus/refresh?destination=config-client:** ”，即刷新服务名为config-client的所有服务实例。
-
+这是Spring Cloud Sleuth的概念图：
