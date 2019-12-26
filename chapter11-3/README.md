@@ -17,3 +17,4 @@ Spring Cloud Sleuth为服务之间调用提供链路追踪。通过Sleuth可以�
 + spring cloud sleuth可以结合zipkin，将信息发送到zipkin，利用zipkin的存储来存储信息，利用zipkin ui来展示数据。
 
 这是Spring Cloud Sleuth的概念图：
+![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image5.png)
