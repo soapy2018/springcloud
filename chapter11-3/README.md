@@ -28,4 +28,13 @@ Spring Cloud Sleuth采用了Google的开源项目Dapper的专业术语。
   - sr-Server Received：服务端获得请求并准备开始处理它，如果将其sr减去cs时间戳，便可得到网络传输的时间。
   - ss-Server Sent：服务端发送响应，该注解表明请求处理的完成（当请求返回客户端），用ss的时间戳减去sr时间戳，便可以得到服务器请求的时间。
   - cr-Client Received：客户端接收响应，此时Span结束，如果cr的时间戳减去cs时间戳，便可以得到整个请求所消耗的时间。
-Spring Cloud Sleuth 也为我们提供了一套完整的链路解决方案,Spring Cloud Sleuth 可以结合 Zipkin，将信息发送到 Zipkin，利用 Zipkin 的存储来存储链路信息，利用 Zipkin UI 来展示数据。
+
+Spring Cloud Sleuth 也为我们提供了一套完整的链路解决方案，Spring Cloud Sleuth 可以结合 Zipkin，将信息发送到 Zipkin，利用 Zipkin 的存储来存储链路信息，利用 Zipkin UI 来展示数据。
+
+### Zipkin
+Zipkin是一种分布式链路追踪系统。 它有助于收集解决微服务架构中的延迟问题所需的时序数据。 它管理这些数据的收集和查找。 Zipkin的设计基于Google Dapper论文。
+
+跟踪器存在于应用程序中，记录请求调用的时间和元数据。跟踪器使用库，它们的使用对用户是无感知的。例如，Web服务器会在收到请求时和发送响应时会记录相应的时间和一些元数据。一次完整链路请求所收集的数据被称为Span。
+
+我们可以使用它来收集各个服务器上请求链路的跟踪数据，并通过它提供的 REST API 接口来辅助我们查询跟踪数据以实现对分布式系统的监控程序，从而及时地发现系统中出现的延迟升高问题并找出系统性能瓶颈的根源。除了面向开发的 API 接口之外，它也提供了方便的 UI 组件来帮助我们直观的搜索跟踪信息和分析请求链路明细，比如：可以查询某段时间内各用户请求的处理时间等。 Zipkin 提供了可插拔数据存储方式：In-Memory、MySql、Cassandra 以及 Elasticsearch。接下来的测试为方便直接采用 In-Memory 方式进行存储，生产推荐 Elasticsearch。
+![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image6.png)
