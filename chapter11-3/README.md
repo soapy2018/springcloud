@@ -18,3 +18,14 @@ Spring Cloud Sleuth为服务之间调用提供链路追踪。通过Sleuth可以�
 
 这是Spring Cloud Sleuth的概念图：
 ![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image5.png)
+
+Spring Cloud Sleuth采用了Google的开源项目Dapper的专业术语。
+
++ Span：基本工作单元，发送一个远程调度任务就会产生一个Span，Span是用一个64位ID唯一标识的，Trace是用另一个64位ID唯一标识的。Span还包含了其他的信息，例如摘要、时间戳事件、Span的ID以及进程ID。
++ Trace：由一系列Span组成的，呈树状结构。请求一个微服务系统的API接口，这个API接口需要调用多个微服务单元，调用每个微服务单元都会产生一个新的Span，所有由这个请求产生的Span组成了这个Trace。
++ Annotation：用于记录一个事件，一些核心注解用于定义一个请求的开始和结束，这些注解如下：
+  - cs-Client Sent：客户端发送一个请求，这个注解描述了Span的开始。
+  - sr-Server Received：服务端获得请求并准备开始处理它，如果将其sr减去cs时间戳，便可得到网络传输的时间。
+  - ss-Server Sent：服务端发送响应，该注解表明请求处理的完成（当请求返回客户端），用ss的时间戳减去sr时间戳，便可以得到服务器请求的时间。
+  - cr-Client Received：客户端接收响应，此时Span结束，如果cr的时间戳减去cs时间戳，便可以得到整个请求所消耗的时间。
+Spring Cloud Sleuth 也为我们提供了一套完整的链路解决方案,Spring Cloud Sleuth 可以结合 Zipkin，将信息发送到 Zipkin，利用 Zipkin 的存储来存储链路信息，利用 Zipkin UI 来展示数据。
