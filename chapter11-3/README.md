@@ -188,9 +188,9 @@ RABBIT_ADDRESSES=localhost java -jar zipkin.jar
 ```
 上面的命令等同于一下的命令：
 ```
-java -jar zipkin.jar --zipkin.collector.rabbitmq.addressed=localhost
+java -jar zipkin.jar --zipkin.collector.rabbitmq.addresses=localhost
 ```
-此时访问RabbitMQ的管理界面http://localhost:15672/ ，在Queues可以看到已经创建了一个zipkin的队列（测试发现删除这个队列就关联不上了，只有重启系统才有用，why？浪费了我一晚上查原因），说明ZipServer 集成RabbitMQ成功了。界面如下：
+此时访问RabbitMQ的管理界面http://localhost:15672/ ，在Queues可以看到已经创建了一个zipkin的队列，说明ZipServer 集成RabbitMQ成功了。界面如下：
 ![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image10.png)
 当然，访问http://localhost:9411/ ，也能看到Zipkin的管理界面。
 
@@ -199,7 +199,82 @@ java -jar zipkin.jar --zipkin.collector.rabbitmq.addressed=localhost
 #    zipkin:
 #      base-url: http://localhost:9411
 ```
-
 3、这样就配置好了，重启user-service和gateway-service，访问http://localhost:9411/ 就能看到链路相关信息了。
 
+### 将链路数据存储在Mysql数据库中
+上面的例子是将链路数据存在内存中，只要zipkin-server重启之后，之前的链路数据全部查找不到了，zipkin是支持将链路数据存储在mysql、cassandra、elasticsearch中的。 现在讲解如何将链路数据存储在Mysql数据库中。 首先需要初始化zikin存储在Mysql的数据的scheme，可以在这里查看https://github.com/openzipkin/zipkin/blob/master/zipkin-storage/mysql-v1/src/main/resources/mysql.sql， 具体如下：
+```
+CREATE TABLE IF NOT EXISTS zipkin_spans (
+  `trace_id_high` BIGINT NOT NULL DEFAULT 0 COMMENT 'If non zero, this means the trace uses 128 bit traceIds instead of 64 bit',
+  `trace_id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `remote_service_name` VARCHAR(255),
+  `parent_id` BIGINT,
+  `debug` BIT(1),
+  `start_ts` BIGINT COMMENT 'Span.timestamp(): epoch micros used for endTs query and to implement TTL',
+  `duration` BIGINT COMMENT 'Span.duration(): micros used for minDuration and maxDuration query',
+  PRIMARY KEY (`trace_id_high`, `trace_id`, `id`)
+) ENGINE=InnoDB ROW_FORMAT=COMPRESSED CHARACTER SET=utf8 COLLATE utf8_general_ci;
+
+ALTER TABLE zipkin_spans ADD INDEX(`trace_id_high`, `trace_id`) COMMENT 'for getTracesByIds';
+ALTER TABLE zipkin_spans ADD INDEX(`name`) COMMENT 'for getTraces and getSpanNames';
+ALTER TABLE zipkin_spans ADD INDEX(`remote_service_name`) COMMENT 'for getTraces and getRemoteServiceNames';
+ALTER TABLE zipkin_spans ADD INDEX(`start_ts`) COMMENT 'for getTraces ordering and range';
+
+CREATE TABLE IF NOT EXISTS zipkin_annotations (
+  `trace_id_high` BIGINT NOT NULL DEFAULT 0 COMMENT 'If non zero, this means the trace uses 128 bit traceIds instead of 64 bit',
+  `trace_id` BIGINT NOT NULL COMMENT 'coincides with zipkin_spans.trace_id',
+  `span_id` BIGINT NOT NULL COMMENT 'coincides with zipkin_spans.id',
+  `a_key` VARCHAR(255) NOT NULL COMMENT 'BinaryAnnotation.key or Annotation.value if type == -1',
+  `a_value` BLOB COMMENT 'BinaryAnnotation.value(), which must be smaller than 64KB',
+  `a_type` INT NOT NULL COMMENT 'BinaryAnnotation.type() or -1 if Annotation',
+  `a_timestamp` BIGINT COMMENT 'Used to implement TTL; Annotation.timestamp or zipkin_spans.timestamp',
+  `endpoint_ipv4` INT COMMENT 'Null when Binary/Annotation.endpoint is null',
+  `endpoint_ipv6` BINARY(16) COMMENT 'Null when Binary/Annotation.endpoint is null, or no IPv6 address',
+  `endpoint_port` SMALLINT COMMENT 'Null when Binary/Annotation.endpoint is null',
+  `endpoint_service_name` VARCHAR(255) COMMENT 'Null when Binary/Annotation.endpoint is null'
+) ENGINE=InnoDB ROW_FORMAT=COMPRESSED CHARACTER SET=utf8 COLLATE utf8_general_ci;
+
+ALTER TABLE zipkin_annotations ADD UNIQUE KEY(`trace_id_high`, `trace_id`, `span_id`, `a_key`, `a_timestamp`) COMMENT 'Ignore insert on duplicate';
+ALTER TABLE zipkin_annotations ADD INDEX(`trace_id_high`, `trace_id`, `span_id`) COMMENT 'for joining with zipkin_spans';
+ALTER TABLE zipkin_annotations ADD INDEX(`trace_id_high`, `trace_id`) COMMENT 'for getTraces/ByIds';
+ALTER TABLE zipkin_annotations ADD INDEX(`endpoint_service_name`) COMMENT 'for getTraces and getServiceNames';
+ALTER TABLE zipkin_annotations ADD INDEX(`a_type`) COMMENT 'for getTraces and autocomplete values';
+ALTER TABLE zipkin_annotations ADD INDEX(`a_key`) COMMENT 'for getTraces and autocomplete values';
+ALTER TABLE zipkin_annotations ADD INDEX(`trace_id`, `span_id`, `a_key`) COMMENT 'for dependencies job';
+
+CREATE TABLE IF NOT EXISTS zipkin_dependencies (
+  `day` DATE NOT NULL,
+  `parent` VARCHAR(255) NOT NULL,
+  `child` VARCHAR(255) NOT NULL,
+  `call_count` BIGINT,
+  `error_count` BIGINT,
+  PRIMARY KEY (`day`, `parent`, `child`)
+) ENGINE=InnoDB ROW_FORMAT=COMPRESSED CHARACTER SET=utf8 COLLATE utf8_general_ci;
+
+```
+在数据库中初始化上面的脚本之后，需要做的就是zipkin-server如何连接数据库。zipkin如何连数据库同连接rabbitmq一样。zipkin连接数据库的属性所对应的环境变量如下：
+属性     | 环境变量 |  描述  |
+-------- | ----- | ------ |
+zipkin.storage.type  | STORAGE_TYPE  | 默认的为mem，即为内存，其他可支持的为cassandra、cassandra3、elasticsearch、mysql  |
+zipkin.storage.mysql.host  | MYSQL_HOST  | 数据库的host，默认localhost  |
+zipkin.storage.mysql.port  | MYSQL_TCP_PORT  | 数据库的端口，默认3306  |
+zipkin.storage.mysql.username  | MYSQL_USER  | 连接数据库的用户名，默认为空  |
+zipkin.storage.mysql.password  | MYSQL_PASS  | 连接数据库的密码，默认为空  |
+zipkin.storage.mysql.db  | MYSQL_DB  | zipkin使用的数据库名，默认是zipkin  |
+zipkin.storage.mysql.max-active  | MYSQL_MAX_CONNECTIONS  | 最大连接数，默认是10  |
+
+zipkin-server使用MySQL存储，用如下命令启动zipkin：
+```
+STORAGE_TYPE=mysql MYSQL_HOST=localhost MYSQL_TCP_PORT=3306 MYSQL_USER=root MYSQL_PASS=123456 MYSQL_DB=zipkin java -jar zipkin.jar
+```
+等同于以下的命令
+```
+java -jar zipkin.jar --zipkin.storage.type=mysql --zipkin.storage.mysql.host=localhost --zipkin.storage.mysql.port=3306 --zipkin.storage.mysql.username=root --zipkin.storage.mysql.password=123456
+```
+若使用RabbitMQ传输链路数据，则以上命令再加上RABBIT_ADDRESSES=localhost，完整命令如下：
+```
+java -jar zipkin.jar --zipkin.collector.rabbitmq.addresses=localhost --zipkin.storage.type=mysql --zipkin.storage.mysql.host=localhost --zipkin.storage.mysql.port=3306 --zipkin.storage.mysql.username=root --zipkin.storage.mysql.password=123456
+```
 
