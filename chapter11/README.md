@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS zipkin_dependencies (
 ) ENGINE=InnoDB ROW_FORMAT=COMPRESSED CHARACTER SET=utf8 COLLATE utf8_general_ci;
 
 ```
-在数据库中初始化上面的脚本之后，需要做的就是zipkin-server如何连接数据库。zipkin如何连数据库同连接rabbitmq一样。zipkin连接MySQL的属性所对应的环境变量如下：
+创建数据库zipkin并在数据库中初始化上面的脚本之后，需要做的就是zipkin-server如何连接数据库。zipkin如何连数据库同连接rabbitmq一样。zipkin连接MySQL的属性所对应的环境变量如下：
 
 属性     | 环境变量 |  描述  |
 -------- | ----- | ------ |
