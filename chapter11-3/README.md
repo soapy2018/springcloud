@@ -62,7 +62,7 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 #### 使用Http传输链路数据
 本案例包含注册中心eureka-server、服务提供者user-server、网关服务gateway-server。
 
-1、服务提供者user-service添加Eureka、Web、sleuth（这个依赖不加貌似也可以）、Zipkin依赖如下：
+1、服务提供者user-service添加Eureka、Web、sleuth（可以不要，Zipkin里已包含sleuth）、Zipkin依赖如下：
 ```
 	<dependencies>
 		<dependency>
@@ -104,7 +104,7 @@ spring:
 
 服务提供者提供一个“ /user/hi ”的API接口，对外提供服务，并在程序启动类开启Eureka Client功能。
 
-2、网关服务gateway-service添加Eureka、Zuul、Web、sleuth（这个依赖不加貌似也可以）、Zipkin依赖如下：
+2、网关服务gateway-service添加Eureka、Zuul、Web、sleuth（可以不要，Zipkin里已包含sleuth）、Zipkin依赖如下：
 ```
 <dependencies>
 		<dependency>
