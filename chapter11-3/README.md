@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS zipkin_dependencies (
 ) ENGINE=InnoDB ROW_FORMAT=COMPRESSED CHARACTER SET=utf8 COLLATE utf8_general_ci;
 
 ```
-在数据库中初始化上面的脚本之后，需要做的就是zipkin-server如何连接数据库。zipkin如何连数据库同连接rabbitmq一样。zipkin连接数据库的属性所对应的环境变量如下：
+在数据库中初始化上面的脚本之后，需要做的就是zipkin-server如何连接数据库。zipkin如何连数据库同连接rabbitmq一样。zipkin连接MySQL的属性所对应的环境变量如下：
 
 属性     | 环境变量 |  描述  |
 -------- | ----- | ------ |
@@ -278,4 +278,45 @@ java -jar zipkin.jar --zipkin.storage.type=mysql --zipkin.storage.mysql.host=loc
 ```
 java -jar zipkin.jar --zipkin.collector.rabbitmq.addresses=localhost --zipkin.storage.type=mysql --zipkin.storage.mysql.host=localhost --zipkin.storage.mysql.port=3306 --zipkin.storage.mysql.username=root --zipkin.storage.mysql.password=123456
 ```
+这样链路信息就会存储在MySQL中了。
+
+### 将链路数据存在在Elasticsearch中
+在高并发的情况下，使用MySQL存储链路数据显然是不合理的，这时可以选择Elasticsearch。zipkin-server支持将链路数据存储在ElasticSearch中。读者需要自行安装ElasticSearch和Kibana，下载地址为 https://www.elastic.co/downloads/elasticsearch 和 https://www.elastic.co/downloads/kibana。 安装完成后启动，其中ElasticSearch的默认端口号为9200，Kibana的默认端口号为5601。
+zipkin连接Elasticsearch的属性所对应的环境变量如下：
+
+属性     | 环境变量 |  描述  |
+-------- | ----- | ------ |
+zipkin.storage.elasticsearch.hosts  | ES_HOSTS  | ES_HOSTS，默认为空  |
+zipkin.storage.elasticsearch.pipeline  | ES_PIPELINE  | ES_PIPELINE，默认为空  |
+zipkin.storage.elasticsearch.max-requests  | ES_MAX_REQUESTS  | ES_MAX_REQUESTS，默认为64  |
+zipkin.storage.elasticsearch.timeout  | ES_TIMEOUT  | ES_TIMEOUT，默认为10s  |
+zipkin.storage.elasticsearch.index  | ES_INDEX  | ES_INDEX，默认是zipkin  |
+zipkin.storage.elasticsearch.date-separator  | ES_DATE_SEPARATOR  | ES_DATE_SEPARATOR，默认为“-”  |
+zipkin.storage.elasticsearch.index-shards  | ES_INDEX_SHARDS  | ES_INDEX_SHARDS，默认是5  |
+zipkin.storage.elasticsearch.index-replicas  | ES_INDEX_REPLICAS  | ES_INDEX_REPLICAS，默认是1  |
+zipkin.storage.elasticsearch.username | ES_USERNAME  | ES的用户名，默认为空  |
+zipkin.storage.elasticsearch.password  | ES_PASSWORD  | ES的密码，默认是为空 |
+
+zipkin-server使用Elasticsearch存储，用如下命令启动zipkin：
+```
+java -jar zipkin.jar --STORAGE_TYPE=elasticsearch --ES_HOSTS=http://localhost:9200 --ES_INDEX=zipkin
+```
+等同于以下的命令
+```
+java -jar zipkin.jar --zipkin.storage.type=elasticsearch --zipkin.storage.elasticsearch.hosts=http://localhost:9200 --zipkin.storage.elasticsearch.index=zipkin
+```
+若使用RabbitMQ传输链路数据，则以上命令再加上RABBIT_ADDRESSES=localhost，完整命令如下：
+```
+java -jar zipkin.jar --zipkin.collector.rabbitmq.addresses=localhost --zipkin.storage.type=elasticsearch --zipkin.storage.elasticsearch.hosts=http://localhost:9200 --zipkin.storage.elasticsearch.index=zipkin
+```
+启动Zipkin、Elasticsearch，这样链路信息就会存储在Elasticsearch中了。
+
+### 在zipkin上展示链路数据
+链路数据存储在ElasticSearch中，ElasticSearch可以和Kibana结合，将链路数据展示在Kibana上。安装完成Kibana后启动，Kibana默认会向本地端口为9200的ElasticSearch读取数据（若不是本地，打开config/kibana.yml文件，通过elasticsearch.hosts设置ElasticSearch地址）。Kibana默认的端口为5601，访问Kibana的主页http://localhost:5601， 其界面如下图所示：
+![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image11.png)
+在上图的界面中，单击“Management”按钮，然后添加一个index。我们将ElasticSearch中写入链路数据的index配置为“zipkin”，那么在界面填写为“zipkin-*”。创建完成index后，单击“Discover”，就可以在界面上展示链路数据了，展示界面如下图所示：
+![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image12.png)
+
+
+
 
