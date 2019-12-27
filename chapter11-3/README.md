@@ -169,7 +169,7 @@ I'm cqf
 ![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image9.png)
 
 ### 使用rabbitmq进行链路数据收集
-在上面的案例中使用的http请求的方式将链路数据发送给zipkin-server，其实还可以使用rabbitmq的方式进行服务的消费。使用rabbitmq需要安装rabbitmq程序，下载地址http://www.rabbitmq.com/ 。
+在上面的案例中使用的http请求的方式将链路数据发送给zipkin-server，其实还可以使用rabbitmq的方式进行服务的消费。使用rabbitmq需要安装rabbitmq程序，下载地址http://www.rabbitmq.com/ 。zipkin连接RabbitMQ的属性所对应的环境变量如下：
 
 属性     | 环境变量 |  描述  |
 -------- | ----- | ------ |
@@ -255,6 +255,7 @@ CREATE TABLE IF NOT EXISTS zipkin_dependencies (
 
 ```
 在数据库中初始化上面的脚本之后，需要做的就是zipkin-server如何连接数据库。zipkin如何连数据库同连接rabbitmq一样。zipkin连接数据库的属性所对应的环境变量如下：
+
 属性     | 环境变量 |  描述  |
 -------- | ----- | ------ |
 zipkin.storage.type  | STORAGE_TYPE  | 默认的为mem，即为内存，其他可支持的为cassandra、cassandra3、elasticsearch、mysql  |
