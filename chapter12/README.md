@@ -28,6 +28,7 @@ Spring Boot Admin是一个开源社区项目，用于管理和监控SpringBoot�
 + 状态更改的事件日志（非持久性）
 
 ## 快速开始
+
 ### 创建Spring Boot Admin Server
 1、在工程admin-server引入admin-server的起来依赖和web的起步依赖，代码如下：
 ```
@@ -96,6 +97,7 @@ management:
 ![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image14.png)
 
 ## Spring boot Admin结合SC注册中心使用
+
 ### 搭建注册中心
 工程eureka-server作为注册中心，跟前面例子类似。它的端口为8121。
 
