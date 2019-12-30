@@ -1,0 +1,421 @@
+2019-09-19 22:33:40.505  INFO 8644 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$6b2c511b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:33:40.825  INFO 8644 --- [main] com.cqf.EurekaClientTwoApplication       : No active profile set, falling back to default profiles: default
+2019-09-19 22:33:41.337  WARN 8644 --- [main] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2019-09-19 22:33:41.462  INFO 8644 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=cfdad466-9d66-3ed6-bd4a-cef7b11baef8
+2019-09-19 22:33:41.525  INFO 8644 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$6b2c511b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:33:41.687  INFO 8644 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8764 (http)
+2019-09-19 22:33:41.709  INFO 8644 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-09-19 22:33:41.710  INFO 8644 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-09-19 22:33:41.813  INFO 8644 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-09-19 22:33:41.813  INFO 8644 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 976 ms
+2019-09-19 22:33:41.881  WARN 8644 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:33:41.881  INFO 8644 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:33:41.887  INFO 8644 --- [main] c.netflix.config.DynamicPropertyFactory  : DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@4872669f
+2019-09-19 22:33:42.385  INFO 8644 --- [main] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2019-09-19 22:33:42.411  WARN 8644 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:33:42.411  INFO 8644 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:33:42.522  INFO 8644 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-19 22:33:42.557  WARN 8644 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+2019-09-19 22:33:42.557  INFO 8644 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-09-19 22:33:42.560  INFO 8644 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-09-19 22:33:42.573  INFO 8644 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2019-09-19 22:33:42.577 ERROR 8644 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:845)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:742)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:389)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202)
+	at com.cqf.EurekaClientTwoApplication.main(EurekaClientTwoApplication.java:18)
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.assertUniqueMethodMapping(AbstractHandlerMethodMapping.java:618)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.register(AbstractHandlerMethodMapping.java:586)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.registerHandlerMethod(AbstractHandlerMethodMapping.java:312)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lambda$detectHandlerMethods$1(AbstractHandlerMethodMapping.java:282)
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:684)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.detectHandlerMethods(AbstractHandlerMethodMapping.java:280)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.processCandidateBean(AbstractHandlerMethodMapping.java:252)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.initHandlerMethods(AbstractHandlerMethodMapping.java:211)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.afterPropertiesSet(AbstractHandlerMethodMapping.java:199)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.afterPropertiesSet(RequestMappingHandlerMapping.java:164)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1837)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1774)
+	... 16 common frames omitted
+
+2019-09-19 22:35:08.296  INFO 16032 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$13b17dac] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:35:08.583  INFO 16032 --- [main] com.cqf.EurekaClientTwoApplication       : No active profile set, falling back to default profiles: default
+2019-09-19 22:35:09.064  WARN 16032 --- [main] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2019-09-19 22:35:09.188  INFO 16032 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=cfdad466-9d66-3ed6-bd4a-cef7b11baef8
+2019-09-19 22:35:09.237  INFO 16032 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$13b17dac] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:35:09.399  INFO 16032 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8764 (http)
+2019-09-19 22:35:09.416  INFO 16032 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-09-19 22:35:09.416  INFO 16032 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-09-19 22:35:09.511  INFO 16032 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-09-19 22:35:09.512  INFO 16032 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 920 ms
+2019-09-19 22:35:09.579  WARN 16032 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:35:09.579  INFO 16032 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:35:09.585  INFO 16032 --- [main] c.netflix.config.DynamicPropertyFactory  : DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@64b0d1fa
+2019-09-19 22:35:10.094  INFO 16032 --- [main] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2019-09-19 22:35:10.119  WARN 16032 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:35:10.119  INFO 16032 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:35:10.226  INFO 16032 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-19 22:35:10.258  WARN 16032 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+2019-09-19 22:35:10.259  INFO 16032 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-09-19 22:35:10.262  INFO 16032 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-09-19 22:35:10.276  INFO 16032 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2019-09-19 22:35:10.281 ERROR 16032 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:845)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:742)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:389)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202)
+	at com.cqf.EurekaClientTwoApplication.main(EurekaClientTwoApplication.java:17)
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.assertUniqueMethodMapping(AbstractHandlerMethodMapping.java:618)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.register(AbstractHandlerMethodMapping.java:586)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.registerHandlerMethod(AbstractHandlerMethodMapping.java:312)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lambda$detectHandlerMethods$1(AbstractHandlerMethodMapping.java:282)
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:684)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.detectHandlerMethods(AbstractHandlerMethodMapping.java:280)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.processCandidateBean(AbstractHandlerMethodMapping.java:252)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.initHandlerMethods(AbstractHandlerMethodMapping.java:211)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.afterPropertiesSet(AbstractHandlerMethodMapping.java:199)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.afterPropertiesSet(RequestMappingHandlerMapping.java:164)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1837)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1774)
+	... 16 common frames omitted
+
+2019-09-19 22:35:51.266  INFO 12584 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$c4a75684] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:35:51.556  INFO 12584 --- [main] com.cqf.EurekaClientTwoApplication       : No active profile set, falling back to default profiles: default
+2019-09-19 22:35:52.022  WARN 12584 --- [main] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2019-09-19 22:35:52.158  INFO 12584 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=cfdad466-9d66-3ed6-bd4a-cef7b11baef8
+2019-09-19 22:35:52.224  INFO 12584 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$c4a75684] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:35:52.393  INFO 12584 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8764 (http)
+2019-09-19 22:35:52.411  INFO 12584 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-09-19 22:35:52.411  INFO 12584 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-09-19 22:35:52.513  INFO 12584 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-09-19 22:35:52.513  INFO 12584 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 949 ms
+2019-09-19 22:35:52.584  WARN 12584 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:35:52.585  INFO 12584 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:35:52.591  INFO 12584 --- [main] c.netflix.config.DynamicPropertyFactory  : DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@1f736d00
+2019-09-19 22:35:53.097  INFO 12584 --- [main] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2019-09-19 22:35:53.121  WARN 12584 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:35:53.121  INFO 12584 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:35:53.231  INFO 12584 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-19 22:35:53.267  WARN 12584 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+2019-09-19 22:35:53.267  INFO 12584 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-09-19 22:35:53.270  INFO 12584 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-09-19 22:35:53.284  INFO 12584 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2019-09-19 22:35:53.288 ERROR 12584 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:845)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:742)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:389)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202)
+	at com.cqf.EurekaClientTwoApplication.main(EurekaClientTwoApplication.java:17)
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.assertUniqueMethodMapping(AbstractHandlerMethodMapping.java:618)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.register(AbstractHandlerMethodMapping.java:586)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.registerHandlerMethod(AbstractHandlerMethodMapping.java:312)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lambda$detectHandlerMethods$1(AbstractHandlerMethodMapping.java:282)
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:684)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.detectHandlerMethods(AbstractHandlerMethodMapping.java:280)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.processCandidateBean(AbstractHandlerMethodMapping.java:252)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.initHandlerMethods(AbstractHandlerMethodMapping.java:211)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.afterPropertiesSet(AbstractHandlerMethodMapping.java:199)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.afterPropertiesSet(RequestMappingHandlerMapping.java:164)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1837)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1774)
+	... 16 common frames omitted
+
+2019-09-19 22:38:08.370  INFO 11776 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5ec02f82] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:38:08.663  INFO 11776 --- [main] com.cqf.EurekaClientTwoApplication       : No active profile set, falling back to default profiles: default
+2019-09-19 22:38:09.154  WARN 11776 --- [main] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2019-09-19 22:38:09.275  INFO 11776 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=cfdad466-9d66-3ed6-bd4a-cef7b11baef8
+2019-09-19 22:38:09.333  INFO 11776 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5ec02f82] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:38:09.481  INFO 11776 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8764 (http)
+2019-09-19 22:38:09.498  INFO 11776 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-09-19 22:38:09.499  INFO 11776 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-09-19 22:38:09.595  INFO 11776 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-09-19 22:38:09.596  INFO 11776 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 923 ms
+2019-09-19 22:38:09.664  WARN 11776 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:38:09.665  INFO 11776 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:38:09.670  INFO 11776 --- [main] c.netflix.config.DynamicPropertyFactory  : DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@12219f6a
+2019-09-19 22:38:10.171  INFO 11776 --- [main] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2019-09-19 22:38:10.195  WARN 11776 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:38:10.196  INFO 11776 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:38:10.303  INFO 11776 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-19 22:38:10.335  WARN 11776 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+2019-09-19 22:38:10.335  INFO 11776 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-09-19 22:38:10.338  INFO 11776 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-09-19 22:38:10.352  INFO 11776 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2019-09-19 22:38:10.356 ERROR 11776 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:845)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:742)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:389)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202)
+	at com.cqf.EurekaClientTwoApplication.main(EurekaClientTwoApplication.java:17)
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'eurekaClientOneApplication' method 
+public java.lang.String com.cqf.EurekaClientOneApplication.home(java.lang.String)
+to {GET /hi}: There is already 'eurekaClientTwoApplication' bean method
+public java.lang.String com.cqf.EurekaClientTwoApplication.home(java.lang.String) mapped.
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.assertUniqueMethodMapping(AbstractHandlerMethodMapping.java:618)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.register(AbstractHandlerMethodMapping.java:586)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.registerHandlerMethod(AbstractHandlerMethodMapping.java:312)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lambda$detectHandlerMethods$1(AbstractHandlerMethodMapping.java:282)
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:684)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.detectHandlerMethods(AbstractHandlerMethodMapping.java:280)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.processCandidateBean(AbstractHandlerMethodMapping.java:252)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.initHandlerMethods(AbstractHandlerMethodMapping.java:211)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.afterPropertiesSet(AbstractHandlerMethodMapping.java:199)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.afterPropertiesSet(RequestMappingHandlerMapping.java:164)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1837)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1774)
+	... 16 common frames omitted
+
+2019-09-19 22:41:05.811  INFO 16056 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$f6ae9b78] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:41:07.088  INFO 16056 --- [main] com.cqf.EurekaClientTwoApplication       : No active profile set, falling back to default profiles: default
+2019-09-19 22:41:07.558  WARN 16056 --- [main] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2019-09-19 22:41:07.685  INFO 16056 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=b1f057d7-ad31-35b8-8e0a-d3e2ddc4d2c6
+2019-09-19 22:41:07.737  INFO 16056 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$f6ae9b78] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:41:07.903  INFO 16056 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8764 (http)
+2019-09-19 22:41:07.922  INFO 16056 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-09-19 22:41:07.923  INFO 16056 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-09-19 22:41:08.024  INFO 16056 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-09-19 22:41:08.024  INFO 16056 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 928 ms
+2019-09-19 22:41:08.092  WARN 16056 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:41:08.092  INFO 16056 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:41:08.098  INFO 16056 --- [main] c.netflix.config.DynamicPropertyFactory  : DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@7f0b93b4
+2019-09-19 22:41:09.407  INFO 16056 --- [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2019-09-19 22:41:09.576  INFO 16056 --- [main] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2019-09-19 22:41:09.601  WARN 16056 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:41:09.601  INFO 16056 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:41:09.719  INFO 16056 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-19 22:41:11.180  INFO 16056 --- [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2019-09-19 22:41:11.222  INFO 16056 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 21 endpoint(s) beneath base path '/actuator'
+2019-09-19 22:41:11.293  INFO 16056 --- [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2019-09-19 22:41:11.314  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2019-09-19 22:41:11.429  INFO 16056 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2019-09-19 22:41:11.429  INFO 16056 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2019-09-19 22:41:11.515  INFO 16056 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2019-09-19 22:41:11.515  INFO 16056 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2019-09-19 22:41:11.614  INFO 16056 --- [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-09-19 22:41:11.761  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2019-09-19 22:41:11.761  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2019-09-19 22:41:11.761  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2019-09-19 22:41:11.761  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2019-09-19 22:41:11.761  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2019-09-19 22:41:11.761  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2019-09-19 22:41:11.761  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2019-09-19 22:41:11.860  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2019-09-19 22:41:11.862  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 10
+2019-09-19 22:41:11.865  INFO 16056 --- [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2019-09-19 22:41:11.868  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1568904071867 with initial instances count: 1
+2019-09-19 22:41:11.868  INFO 16056 --- [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application EUREKA-CLIENT-TWO with eureka with status UP
+2019-09-19 22:41:11.869  INFO 16056 --- [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1568904071869, current=UP, previous=STARTING]
+2019-09-19 22:41:11.871  INFO 16056 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_EUREKA-CLIENT-TWO/localhost:eureka-client-two:8764: registering service...
+2019-09-19 22:41:11.896  INFO 16056 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_EUREKA-CLIENT-TWO/localhost:eureka-client-two:8764 - registration status: 204
+2019-09-19 22:41:11.904  INFO 16056 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8764 (http) with context path ''
+2019-09-19 22:41:11.905  INFO 16056 --- [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8764
+2019-09-19 22:41:11.907  INFO 16056 --- [main] com.cqf.EurekaClientTwoApplication       : Started EurekaClientTwoApplication in 7.972 seconds (JVM running for 8.747)
+2019-09-19 22:41:12.502  INFO 16056 --- [RMI TCP Connection(2)-192.168.45.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-09-19 22:41:12.502  INFO 16056 --- [RMI TCP Connection(2)-192.168.45.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-09-19 22:41:12.509  INFO 16056 --- [RMI TCP Connection(2)-192.168.45.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+2019-09-19 22:44:39.163  INFO 14528 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$a363f399] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:44:39.481  INFO 14528 --- [main] com.cqf.EurekaClientTwoApplication       : No active profile set, falling back to default profiles: default
+2019-09-19 22:44:40.040  WARN 14528 --- [main] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2019-09-19 22:44:40.204  INFO 14528 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=b1f057d7-ad31-35b8-8e0a-d3e2ddc4d2c6
+2019-09-19 22:44:40.261  INFO 14528 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$a363f399] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:44:40.456  INFO 14528 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8764 (http)
+2019-09-19 22:44:40.481  INFO 14528 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-09-19 22:44:40.482  INFO 14528 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-09-19 22:44:40.593  INFO 14528 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-09-19 22:44:40.594  INFO 14528 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1103 ms
+2019-09-19 22:44:40.669  WARN 14528 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:44:40.670  INFO 14528 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:44:40.677  INFO 14528 --- [main] c.netflix.config.DynamicPropertyFactory  : DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@11d2dd2d
+2019-09-19 22:44:41.215  INFO 14528 --- [main] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2019-09-19 22:44:41.244  WARN 14528 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:44:41.245  INFO 14528 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:44:41.382  INFO 14528 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-19 22:44:41.959  INFO 14528 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 21 endpoint(s) beneath base path '/actuator'
+2019-09-19 22:44:42.031  INFO 14528 --- [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2019-09-19 22:44:42.052  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2019-09-19 22:44:42.179  INFO 14528 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2019-09-19 22:44:42.179  INFO 14528 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2019-09-19 22:44:42.261  INFO 14528 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2019-09-19 22:44:42.261  INFO 14528 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2019-09-19 22:44:42.369  INFO 14528 --- [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-09-19 22:44:42.531  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2019-09-19 22:44:42.531  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2019-09-19 22:44:42.531  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2019-09-19 22:44:42.531  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2019-09-19 22:44:42.531  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2019-09-19 22:44:42.532  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2019-09-19 22:44:42.532  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2019-09-19 22:44:42.638  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2019-09-19 22:44:42.640  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 10
+2019-09-19 22:44:42.642  INFO 14528 --- [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2019-09-19 22:44:42.646  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1568904282645 with initial instances count: 3
+2019-09-19 22:44:42.647  INFO 14528 --- [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application EUREKA-CLIENT-TWO with eureka with status UP
+2019-09-19 22:44:42.647  INFO 14528 --- [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1568904282647, current=UP, previous=STARTING]
+2019-09-19 22:44:42.649  INFO 14528 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_EUREKA-CLIENT-TWO/LAPTOP-66FA2IS3:eureka-client-two:8764: registering service...
+2019-09-19 22:44:42.677  INFO 14528 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_EUREKA-CLIENT-TWO/LAPTOP-66FA2IS3:eureka-client-two:8764 - registration status: 204
+2019-09-19 22:44:42.684  INFO 14528 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8764 (http) with context path ''
+2019-09-19 22:44:42.685  INFO 14528 --- [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8764
+2019-09-19 22:44:42.687  INFO 14528 --- [main] com.cqf.EurekaClientTwoApplication       : Started EurekaClientTwoApplication in 4.672 seconds (JVM running for 5.343)
+2019-09-19 22:44:43.143  INFO 14528 --- [RMI TCP Connection(2)-192.168.45.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-09-19 22:44:43.144  INFO 14528 --- [RMI TCP Connection(2)-192.168.45.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-09-19 22:44:43.153  INFO 14528 --- [RMI TCP Connection(2)-192.168.45.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2019-09-19 22:48:22.817  INFO 16676 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$38df7fd4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:48:23.104  INFO 16676 --- [main] com.cqf.EurekaClientTwoApplication       : No active profile set, falling back to default profiles: default
+2019-09-19 22:48:23.602  WARN 16676 --- [main] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2019-09-19 22:48:23.732  INFO 16676 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=b1f057d7-ad31-35b8-8e0a-d3e2ddc4d2c6
+2019-09-19 22:48:23.785  INFO 16676 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$38df7fd4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-19 22:48:23.948  INFO 16676 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8764 (http)
+2019-09-19 22:48:23.966  INFO 16676 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-09-19 22:48:23.967  INFO 16676 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-09-19 22:48:24.069  INFO 16676 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-09-19 22:48:24.069  INFO 16676 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 955 ms
+2019-09-19 22:48:24.140  WARN 16676 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:48:24.141  INFO 16676 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:48:24.147  INFO 16676 --- [main] c.netflix.config.DynamicPropertyFactory  : DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@5403799b
+2019-09-19 22:48:24.678  INFO 16676 --- [main] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2019-09-19 22:48:24.702  WARN 16676 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-09-19 22:48:24.702  INFO 16676 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-09-19 22:48:24.821  INFO 16676 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-19 22:48:25.344  INFO 16676 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 21 endpoint(s) beneath base path '/actuator'
+2019-09-19 22:48:25.406  INFO 16676 --- [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2019-09-19 22:48:25.427  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2019-09-19 22:48:25.530  INFO 16676 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2019-09-19 22:48:25.530  INFO 16676 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2019-09-19 22:48:25.612  INFO 16676 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2019-09-19 22:48:25.612  INFO 16676 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2019-09-19 22:48:25.706  INFO 16676 --- [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-09-19 22:48:25.863  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2019-09-19 22:48:25.864  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2019-09-19 22:48:25.864  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2019-09-19 22:48:25.864  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2019-09-19 22:48:25.864  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2019-09-19 22:48:25.864  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2019-09-19 22:48:25.864  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2019-09-19 22:48:25.928  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2019-09-19 22:48:25.930  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 10
+2019-09-19 22:48:25.931  INFO 16676 --- [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2019-09-19 22:48:25.934  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1568904505933 with initial instances count: 0
+2019-09-19 22:48:25.935  INFO 16676 --- [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application EUREKA-CLIENT-TWO with eureka with status UP
+2019-09-19 22:48:25.935  INFO 16676 --- [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1568904505935, current=UP, previous=STARTING]
+2019-09-19 22:48:25.937  INFO 16676 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_EUREKA-CLIENT-TWO/LAPTOP-66FA2IS3:eureka-client-two:8764: registering service...
+2019-09-19 22:48:25.972  INFO 16676 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8764 (http) with context path ''
+2019-09-19 22:48:25.973  INFO 16676 --- [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8764
+2019-09-19 22:48:25.977  INFO 16676 --- [main] com.cqf.EurekaClientTwoApplication       : Started EurekaClientTwoApplication in 4.214 seconds (JVM running for 4.932)
+2019-09-19 22:48:25.981  INFO 16676 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_EUREKA-CLIENT-TWO/LAPTOP-66FA2IS3:eureka-client-two:8764 - registration status: 204
+2019-09-19 22:48:26.319  INFO 16676 --- [RMI TCP Connection(2)-192.168.45.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-09-19 22:48:26.319  INFO 16676 --- [RMI TCP Connection(2)-192.168.45.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-09-19 22:48:26.328  INFO 16676 --- [RMI TCP Connection(2)-192.168.45.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2019-09-19 22:48:30.931  INFO 16676 --- [DiscoveryClient-CacheRefreshExecutor-0] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2019-09-19 22:48:30.931  INFO 16676 --- [DiscoveryClient-CacheRefreshExecutor-0] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2019-09-19 22:48:30.931  INFO 16676 --- [DiscoveryClient-CacheRefreshExecutor-0] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2019-09-19 22:48:30.931  INFO 16676 --- [DiscoveryClient-CacheRefreshExecutor-0] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2019-09-19 22:48:30.931  INFO 16676 --- [DiscoveryClient-CacheRefreshExecutor-0] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2019-09-19 22:48:30.931  INFO 16676 --- [DiscoveryClient-CacheRefreshExecutor-0] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2019-09-19 22:48:30.931  INFO 16676 --- [DiscoveryClient-CacheRefreshExecutor-0] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2019-09-19 22:48:30.958  INFO 16676 --- [DiscoveryClient-CacheRefreshExecutor-0] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2019-09-19 22:53:25.868  INFO 16676 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-09-19 22:58:25.869  INFO 16676 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-09-19 23:03:25.872  INFO 16676 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-09-19 23:08:25.873  INFO 16676 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-09-19 23:13:25.875  INFO 16676 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
