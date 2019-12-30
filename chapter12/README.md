@@ -291,7 +291,7 @@ spring.boot.admin.notify.mail.to: soapy2012@163.com
 ```
 做完以上配置后，当我们已注册的客户端的状态从 UP 变为 OFFLINE 或其他状态，服务端就会自动将电子邮件发送到上面配置的地址。
 
-## Spring Boot日志管理
+## Spring Boot Admin日志管理
 Spring Boot Admin默认开启env、metrics、dump、jolokia和info等节点，支持对日志的管理，也支持Logback，并且默认已集成了Logback，所以不需要引入Logback，但需要配置Logback的JMXConfigurator。
 
 1、在Resources目录下建一个logback-spring.xml，代码如下：
