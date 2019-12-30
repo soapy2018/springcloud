@@ -88,10 +88,11 @@ management:
       show-details: ALWAYS
 ```
 
-依次启动两个工程，在浏览器上输入localhost:8888 ，浏览器显示的界面如下：
+### 运行程序
+1、依次启动两个工程，在浏览器上输入localhost:8888 ，浏览器显示的界面如下：
 ![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image13.png)
 
-点击wallboard，可以查看admin-client具体的信息，比如内存状态信息等等：
+2、点击wallboard，可以查看admin-client具体的信息，比如内存状态信息等等：
 ![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image14.png)
 
 ## Spring boot Admin结合SC注册中心使用
@@ -176,16 +177,135 @@ eureka:
     metadata-map:
       startup: ${random.int}    #needed to trigger info and endpoint update after restart
 ```
-在启动类加上@EnableEurekaClient注解，开启Eureka Client的功能。
+3、在启动类加上@EnableEurekaClient注解，开启Eureka Client的功能。
 
+### 运行程序
 依次启动eureka-server、admin-server、dmin-client，访问http://localhost:8888/ ，效果一样，只是多了一个服务。
 
 重点：admin会自己拉取Eureka Server上注册的服务信息，主动去发现注册client。这也是唯一区别之前手动注册的地方，就是client端不需要admin-client的依赖，也不需要配置 admin地址了，一切全部由 admin-server自己实现。这样的设计对环境变化很友好，不用改了admin-server后去改所有app 的配置了。
 
+## 集成spring security
+在2.1.0版本中去掉了hystrix dashboard，登录界面默认集成到了spring security模块，只要加上spring security就集成了登录模块。
 
+1、修改admin-server工程，需要在admin-server工程的pom文件引入Spring Security和Jolokia（在管理界面中需要与JMX-Beans进行交互）的依赖：
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.jolokia</groupId>
+    <artifactId>jolokia-core</artifactId>
+</dependency>
+```
+2、在admin-server工的配置文件application.yml中配置spring security的用户名和密码，这时需要在服务注册时带上metadata-map的信息，如下：
+```
+server:
+  port: 8888
 
+spring:
+  application:
+    name: admin-service
+###Spring Security配置用户名和密码
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+###Spring Security配置用户名和密码
 
+eureka:
+  client:
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8121}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+###Spring Security配置用户名和密码
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+###Spring Security配置用户名和密码
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+```
+3、写一个配置类SecuritySecureConfig继承WebSecurityConfigurerAdapter，代码如下：
+```
+@Configuration
+public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
+
+    private final String adminContextPath;
+
+    public SecuritySecureConfig(AdminServerProperties adminServerProperties) {
+        this.adminContextPath = adminServerProperties.getContextPath();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
+        SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+        successHandler.setTargetUrlParameter( "redirectTo" );
+
+        http.authorizeRequests()
+                .antMatchers( adminContextPath + "/assets/**" ).permitAll()
+                .antMatchers( adminContextPath + "/login" ).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage( adminContextPath + "/login" ).successHandler( successHandler ).and()
+                .logout().logoutUrl( adminContextPath + "/logout" ).and()
+                .httpBasic().and()
+                .csrf().disable();
+        // @formatter:on
+    }
+}
+```
+4、重启启动工程，在浏览器上访问：http://localhost:8888/， 会被重定向到登录界面，登录的用户名和密码为配置文件中配置的，分别为admin和admin，界面显示如下：
+![Aaron Swartz](https://raw.githubusercontent.com/soapy2018/MarkdownPhotos/master/Image15.png)
+
+## 集成邮箱报警功能
+在spring boot admin中，也可以集成邮箱报警功能，比如服务不健康了、下线了，都可以给指定邮箱发送邮件。集成非常简单，只需要改造下admin-server即可：
+
+在admin-server工程Pom文件，加上mail的起步依赖，代码如下：
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+```
+在配置文件application.yml文件中，需要配置邮件相关的配置，如下：
+```
+spring.mail.host: smtp.163.com
+spring.mail.username: soapy2012
+spring.mail.password: soapy2012  #授权码
+spring.boot.admin.notify.mail.from: soapy2012@163.com
+spring.boot.admin.notify.mail.to: soapy2012@163.com
+```
+做完以上配置后，当我们已注册的客户端的状态从 UP 变为 OFFLINE 或其他状态，服务端就会自动将电子邮件发送到上面配置的地址。
+
+## Spring Boot日志管理
+Spring Boot Admin默认开启env、metrics、dump、jolokia和info等节点，支持对日志的管理，也支持Logback，并且默认已集成了Logback，所以不需要引入Logback，但需要配置Logback的JMXConfigurator。
+
+1、在Resources目录下建一个logback-spring.xml，代码如下：
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <jmxConfigurator/>
+</configuration>
+```
+2、在配置文件配置日志路径。例如：
+###配置日志路径
+```
+logging:
+  file: "logs/admin-server.log"
+```
 
 
 
