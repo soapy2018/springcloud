@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.cqf</groupId>
-	<artifactId>eureka-client-one</artifactId>
+	<artifactId>admin-client</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>eureka-client-one</name>
+	<name>admin-client</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -23,11 +23,19 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+<!--		没有集成注册中心时，admin client依赖-->
+<!--		<dependency>-->
+<!--			<groupId>de.codecentric</groupId>-->
+<!--			<artifactId>spring-boot-admin-starter-client</artifactId>-->
+<!--			<version>2.1.0</version>-->
+<!--		</dependency>-->
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 
+<!--在集成SC后必须添加actuator依赖-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>

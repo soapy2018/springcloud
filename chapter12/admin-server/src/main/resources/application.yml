@@ -2,28 +2,29 @@
 server:
   port: 8888
 
-logging:
-  file: "logs/boot-admin-sample.log"
-
 spring:
   application:
-    name: service-admin
+    name: admin-service
+###Spring Security配置用户名和密码
   security:
     user:
       name: "admin"
       password: "admin"
+###Spring Security配置用户名和密码
 
 eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 10
-    health-check-url-path: /actuator/health
-    metadata-map:
-      user.name: ${spring.security.user.name}
-      user.password: ${spring.security.user.password}
   client:
     registryFetchIntervalSeconds: 5
     serviceUrl:
       defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8121}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+###Spring Security配置用户名和密码
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+###Spring Security配置用户名和密码
 
 management:
   endpoints:
@@ -34,11 +35,18 @@ management:
     health:
       show-details: ALWAYS
 
+###邮箱报警功能
 spring.mail.host: smtp.163.com
 spring.mail.username: soapy2012
 spring.mail.password: soapy2012  #授权码
 spring.boot.admin.notify.mail.from: soapy2012@163.com
 spring.boot.admin.notify.mail.to: soapy2012@163.com
+
+###配置日志路径
+logging:
+  file: "logs/admin-server.log"
+
+
 
 
 
