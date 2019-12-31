@@ -69,7 +69,7 @@ public interface Authentication extends Principal, Serializable {
 }
 ```
 以上的 Authentication 接口是 spring-security-core jar 包中的接口，直接继承自 Principal 类，而 Principal 是位于 java.security 包中，由此可知 Authentication 是 spring security 中核心的接口。通过这个 Authentication 接口的实现类，我们可以得到用户拥有的权限信息列表，密码，用户细节信息，用户身份信息，认证信息等。
-```
+
 + 小结
 
 下面我们来简单总结一下 SecurityContextHolder，SecurityContext 和 Authentication 这个三个对象之间的关系，SecurityContextHolder 用来保存 SecurityContext （安全上下文对象），通过调用 SecurityContext 对象中的方法，如 getAuthentication 方法，我们可以方便地获取 Authentication 对象，利用该对象我们可以进一步获取已认证用户的详细信息。
