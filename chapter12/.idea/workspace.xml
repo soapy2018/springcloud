@@ -2,36 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f2c7443-c877-4ffc-be13-ebe8b68ca692" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin-client/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/admin-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin-server/src/main/java/com/cqf/AdminServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-server/src/main/java/com/cqf/AdminServerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin-server/src/main/java/com/cqf/SecuritySecureConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-server/src/main/java/com/cqf/SecuritySecureConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin-server/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/admin-server/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-one/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/admin-client/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-one/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/admin-client/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-one/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/admin-client/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-one/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/admin-client/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-one/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/admin-client/mvnw.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-one/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/admin-client/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-one/src/main/java/com/cqf/EurekaClientOneApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-client/src/main/java/com/cqf/AdminClientApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-one/src/main/resources/bootstrap.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-one/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/admin-client/src/main/resources/logback-spring.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-one/src/test/java/com/cqf/EurekaClientOneApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-two/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-two/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-two/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-two/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-two/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-two/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-two/src/main/java/com/cqf/EurekaClientTwoApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-two/src/main/resources/bootstrap.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-two/src/main/resources/logback-spring.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-client-two/src/test/java/com/cqf/EurekaClientTwoApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-client/src/test/java/com/cqf/AdminClientApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/admin-client.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/admin-client.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/admin-server.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/admin-server.log" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/eureka-client-two/target/" />
@@ -111,7 +83,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/logs/admin-client.log">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-342" />
+            <state relative-caret-position="-256" />
           </provider>
         </entry>
       </file>
@@ -199,6 +171,28 @@
         <option name="jdkForImporter" value="1.8" />
       </MavenImportingSettings>
     </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="admin-server" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="admin-server" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="admin-server" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
+          <item name="org.springframework.boot:spring-boot-starter-security:2.1.6.RELEASE" type="c0821a7e:MavenProjectsStructure$DependencyNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-12" />
@@ -458,16 +452,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1577674929060</updated>
-      <workItem from="1577674932359" duration="14908000" />
+      <workItem from="1577674932359" duration="16146000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14908000" />
+    <option name="totallyTimeSpent" value="16146000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Designer" />
       <window_info id="Image Layers" />
@@ -475,7 +468,7 @@
       <window_info id="UI Designer" />
       <window_info id="Favorites" side_tool="true" />
       <window_info id="Web" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2918351" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2918351" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Spring" />
       <window_info anchor="bottom" id="Terminal" />
@@ -492,7 +485,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Maven" />
+      <window_info active="true" anchor="right" id="Maven" visible="true" weight="0.32983023" />
       <window_info anchor="right" id="Palette" />
       <window_info anchor="right" id="Capture Analysis" />
       <window_info anchor="right" id="Database" />
@@ -633,7 +626,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/logs/admin-client.log">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-342" />
+        <state relative-caret-position="-256" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/admin-server/src/main/resources/application.yml">
