@@ -31,6 +31,7 @@ Spring Security是Spring Resource社区的一个安全组件，为JavaEE企业�
 默认情况下，SecurityContextHolder 使用 ThreadLocal 来存储这些详细信息，这意味着 Security Context 始终可用于同一执行线程中的方法，即使 Security Context 未作为这些方法的参数显式传递。
 
 + 获取当前用户的信息
+
 因为身份信息与当前执行线程已绑定，所以可以使用以下代码块在应用程序中获取当前已验证用户的用户名：
 ```
 Object principal = SecurityContextHolder.getContext()
@@ -51,6 +52,7 @@ public interface SecurityContext extends Serializable {
 }
 ```
 + Authentication
+
 在 SecurityContext 接口中定义了 getAuthentication 和 setAuthentication 两个抽象方法，当调用 getAuthentication 方法后会返回一个 Authentication 类型的对象，这里的 Authentication 也是一个接口，它的定义如下：
 ```
 // org/springframework/security/core/Authentication.java
@@ -65,9 +67,11 @@ public interface Authentication extends Principal, Serializable {
 	boolean isAuthenticated();
 	void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException;
 }
+```
 以上的 Authentication 接口是 spring-security-core jar 包中的接口，直接继承自 Principal 类，而 Principal 是位于 java.security 包中，由此可知 Authentication 是 spring security 中核心的接口。通过这个 Authentication 接口的实现类，我们可以得到用户拥有的权限信息列表，密码，用户细节信息，用户身份信息，认证信息等。
 ```
 + 小结
+
 下面我们来简单总结一下 SecurityContextHolder，SecurityContext 和 Authentication 这个三个对象之间的关系，SecurityContextHolder 用来保存 SecurityContext （安全上下文对象），通过调用 SecurityContext 对象中的方法，如 getAuthentication 方法，我们可以方便地获取 Authentication 对象，利用该对象我们可以进一步获取已认证用户的详细信息。
 
 
