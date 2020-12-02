@@ -1,2 +1,2 @@
-# springcloud-book
+# springcloud
 SpringCloud examples
