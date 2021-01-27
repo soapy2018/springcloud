@@ -4,24 +4,43 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.cqf</groupId>
-	<artifactId>eureka-monitor-client</artifactId>
+	<artifactId>eureka-ribbon-client</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>eureka-monitor-client</name>
+	<name>eureka-ribbon-client</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
 		<groupId>com.cqf</groupId>
-		<artifactId>chapter8-8</artifactId>
+		<artifactId>chapter8-Hystrix</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-turbine</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -42,6 +61,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>

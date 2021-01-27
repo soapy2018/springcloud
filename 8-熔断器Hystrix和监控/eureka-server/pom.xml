@@ -13,7 +13,7 @@
 
 	<parent>
 		<groupId>com.cqf</groupId>
-		<artifactId>chapter8-8</artifactId>
+		<artifactId>chapter8-Hystrix</artifactId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
