@@ -4,16 +4,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.cqf</groupId>
-	<artifactId>user-service</artifactId>
+	<artifactId>gateway-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>user-service</name>
+	<name>gateway-service</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
 		<groupId>com.cqf</groupId>
-		<artifactId>chapter11</artifactId>
+		<artifactId>chapter11-zipkin</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
@@ -24,24 +24,26 @@
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-zipkin</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-rabbit</artifactId>
 		</dependency>
+
 
 	</dependencies>
 
@@ -53,5 +55,6 @@
 			</plugin>
 		</plugins>
 	</build>
+
 
 </project>
