@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Chapter47Application {
+public class Chapter4Swagger2Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Chapter47Application.class, args);
+		SpringApplication.run(Chapter4Swagger2Application.class, args);
 	}
 }
