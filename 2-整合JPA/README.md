@@ -1,4 +1,4 @@
-## Chapter 4-5 Spring Boot整合JPA
+## Chapter 2 Spring Boot整合JPA
 ====================================================================
 JPA全称JAVA Persistence API，它是一个数据持久化的类和方法的集合。目前，在Java项目开发中提到JPA一般是指用Hibernate的实现，因为在Java的ORM框架中，只有Hibernate实现得最好。本案例使用JPA+MySQL数据库，MySQL需提前安装好。
 
