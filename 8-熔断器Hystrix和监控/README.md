@@ -1,4 +1,4 @@
-## Chapter 8-8 熔断器Hystrix + 监控Hystrix Dashboard + 聚合监控Turbine
+## Chapter8 熔断器Hystrix + 监控Hystrix Dashboard + 聚合监控Turbine
 ====================================================================
 
 ### 什么是Hystrix
