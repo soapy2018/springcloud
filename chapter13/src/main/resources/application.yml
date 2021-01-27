@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8131
 
 #logging:
 #  level:
@@ -9,12 +9,12 @@ server:
 
 spring:
   thymeleaf:
-    mode: HTML5
+    mode: HTML
     encoding: UTF-8
     cache: false
 
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/spring-security?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&serverTimezone=GMT
     username: root
     password: 123456

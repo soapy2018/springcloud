@@ -9,9 +9,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+
 
 @EnableWebSecurity
 @Configuration
@@ -32,27 +33,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.exceptionHandling().accessDeniedPage("/401");
 		http.logout().logoutSuccessUrl("/");
 	}
-	// @formatter:on
 
-	// @formatter:off
+
+	//数据库中校验
 	@Autowired
 	UserDetailsService userDetailsService; // 注入UserService
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-/*		内存中校验
-		auth.userDetailsService(userDetailsService());*/
-		auth.userDetailsService(userDetailsService);
+		//内存中校验
+//		auth.userDetailsService(userDetailsService());
+
+		//数据库中校验
+		auth.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
 	}
-	// @formatter:on
 
 
-/*	内存中存放用户信息
-	@Bean
-	public UserDetailsService userDetailsService() {
-		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager(); // 在内存中存放用户信息
-		manager.createUser(User.withUsername("cqf").password("123456").roles("USER").build());
-		manager.createUser(User.withUsername("admin").password("123456").roles("USER","ADMIN").build());
-		return manager;
-	}*/
+
+	//内存中存放用户信息
+//	@Bean
+//	public UserDetailsService userDetailsService() {
+//		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager(); // 在内存中存放用户信息
+//		manager.createUser(User.withUsername("cqf").password("{noop}123456").roles("USER").build());
+//		manager.createUser(User.withUsername("admin").password("{noop}123456").roles("USER","ADMIN").build());
+//		return manager;
+//	}
 }
