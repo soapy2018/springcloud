@@ -1,0 +1,1 @@
+insert into user(username, password) values ('CQF', '123456');
