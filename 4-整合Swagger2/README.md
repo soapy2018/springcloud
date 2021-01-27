@@ -1,4 +1,4 @@
-## Chapter 4-7 Spring Boot整合Swagger2，搭建RESTful API在线文档
+## Chapter4 Spring Boot整合Swagger2，搭建RESTful API在线文档
 ====================================================================
 
 Swagger，中文“拽”的意思，它是一个功能强大的在线API文档的框架，当前使用的版本是2.X，所以称为Swagger2。
