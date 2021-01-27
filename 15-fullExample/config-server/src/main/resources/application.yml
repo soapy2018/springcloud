@@ -1,0 +1,46 @@
+# remote git
+#spring:
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://git.coding.net/xiaoantimes/xiaoantimes-taichi
+#          searchPaths: backend/repo
+#          username: 124746406@qq.com
+#          password:
+#      label: master
+
+# remote git
+#spring:
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://github.com/soapy2018/SpringCloudConfig
+#          searchPaths: respo
+#          username:
+#          password:
+#      label: master
+
+# ---native
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+  profiles:
+     active: native  #指定从本地仓库获取配置文件
+  application:
+    name: config-server
+
+# port
+server:
+  port: 8769
+
+management:
+  security:
+    enabled: false
+
+
+
