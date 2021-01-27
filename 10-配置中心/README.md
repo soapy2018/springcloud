@@ -1,4 +1,4 @@
-## Chapter 10 配置中心Spring Cloud Config
+## Chapter10 配置中心Spring Cloud Config
 ====================================================================
 
 本章主要讲述Spring Cloud的组件——分布式配置中心Spring Cloud Config，分为以下四个方面：
