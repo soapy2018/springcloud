@@ -82,7 +82,7 @@ public class EurekaClientApplication {
 }
 ```
 
-启动Eureka-Client工程，控制台会打印出注册信息，同时再访问Eureka Server主页时会显示多了要给注册实例。
+启动Eureka-Client工程，控制台会打印出注册信息，同时再访问Eureka Server主页时会多了一个注册实例。
 
 
 
