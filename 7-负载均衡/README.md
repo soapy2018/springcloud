@@ -222,5 +222,5 @@ Feign的实现过程：
 
 （6）Request对象交给Client去处理，其中Client的网络请求框架可以是HttpURLConnection、HttpClient和OKHttp。
 
-（7）最好Client被封装到LoadBalancerClient类，这个类结合Ribbon做到了负载均衡。
+（7）最后Client被封装到LoadBalancerClient类，这个类结合Ribbon做到了负载均衡。
 
